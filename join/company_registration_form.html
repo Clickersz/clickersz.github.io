@@ -202,6 +202,30 @@
         document.body.removeChild(tempTextArea);
       }
     }
+          // TASK 3: Transmit data straight to your Formspree API Endpoint
+      // IMPORTANT: Replace the placeholder string below with your actual Formspree ID!
+      const formspreeEndpoint = "https://formspree.io/f/maenovwe";
+
+      fetch(formspreeEndpoint, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Success!');
+        } else {
+          alert('Failed to transmit form data. Please check your Formspree URL ID configuration.');
+        }
+      })
+      .catch(error => {
+        alert('Network connection error. Could not connect to Formspree.');
+        console.error(error);
+      });
+    }
   </script>
 </body>
 </html>
