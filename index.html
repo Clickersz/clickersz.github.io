@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clickers - Indigo Directory & Local Hub</title>
+  <meta name="description" content="Clickers / INDIGO: A Listing Search Engine for local companies, institutions, and services in Zambia.">
+  <meta name="keywords" content="Zambia, Indigo, Clickers, Lusaka, Livingstone, Kitwe, Listing, Directory, News">
+  <meta name="author" content="Stewards International Forum">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --indigo-primary: #0d6efd;
+      --indigo-dark: #0a2540;
+      --indigo-light-bg: #f8fafc;
+    }
+
+    /* Condensed Typography & Global Rules */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--indigo-light-bg);
+      color: #334155;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.3;
+      font-size: 0.9rem;
+    }
+
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+      line-height: 1.2;
+      margin-bottom: 0.35rem;
+    }
+
+    p {
+      margin-bottom: 0.4rem;
+      line-height: 1.35;
+    }
+
+    /* Header & Blue Gradient Overlay */
+    .brand-header-wrapper {
+      position: relative;
+      background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 50%, #0d6efd 100%);
+      padding-top: 1.25rem;
+      padding-bottom: 2.75rem;
+    }
+
+    .clickers-logo-svg {
+      max-width: 220px;
+      height: auto;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+    }
+
+    .centered-nav .nav-link {
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 500;
+      padding: 0.25rem 0.75rem !important;
+      font-size: 0.85rem;
+      transition: color 0.2s ease;
+    }
+
+    .centered-nav .nav-link:hover,
+    .centered-nav .nav-link.active {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    /* Search Box Floating Container */
+    .search-box-container {
+      position: relative;
+      margin-top: -1.6rem;
+      z-index: 10;
+    }
+
+    .search-input-pill {
+      border-radius: 50rem !important;
+      padding-left: 3.25rem;
+      padding-right: 3rem;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      background-color: #ffffff;
+    }
+
+    .search-input-pill:focus {
+      box-shadow: 0 12px 28px -4px rgba(13, 110, 253, 0.25);
+      border-color: var(--indigo-primary);
+    }
+
+    .search-icon-pos {
+      position: absolute;
+      left: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 1.1rem;
+      pointer-events: none;
+    }
+
+    .clear-icon-pos {
+      position: absolute;
+      right: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* Fixed Overlapping Layout in 4-Grid Segment */
+    .top-segment-container {
+      background-color: #ffffff;
+      border-radius: 8px;
+    }
+
+    .svg-card-container {
+      display: flex;
+    }
+
+    .svg-card-frame {
+      width: 100%;
+      border-radius: 8px;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      min-height: 200px;
+    }
+
+    .svg-graphic-wrapper {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem 0;
+      max-height: 80px;
+    }
+
+    .svg-graphic-wrapper svg {
+      width: 100%;
+      height: 100%;
+      max-height: 70px;
+      object-fit: contain;
+    }
+
+    /* News Image Box */
+    .news-image-box {
+      width: 100%;
+      height: 110px;
+      border-radius: 6px;
+      overflow: hidden;
+      background-color: #e2e8f0;
+      margin-bottom: 0.5rem;
+    }
+
+    .news-image-box svg, .news-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 767.98px) {
+      .mobile-full-width {
+        width: 100% !important;
+      }
+      .desktop-only-directory {
+        display: none !important;
+      }
+    }
+
+    .news-badge-local {
+      background-color: #0d6efd;
+      color: #ffffff;
+    }
+    .news-badge-foreign {
+      background-color: #6c757d;
+      color: #ffffff;
+    }
+
+    footer {
+      margin-top: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- BRAND HEADER WITH BLUE GRADIENT OVERLAY -->
+  <header class="brand-header-wrapper text-center">
+    <div class="container">
+      
+      <!-- CENTERED CLICKERS BRAND LOGO -->
+      <div class="mb-2">
+        
+          <img class="p-3 p-3 mb-1 img-fluid" src="Clickers logo.png" alt=".digital integrity"> 
+        
+      </div>
+
+      <p class="text-white-50 small mb-2" style="font-size: 0.75rem;">Zambia Business Search Engine & Directory Hub</p>
+
+      <!-- CENTERED NAVIGATION BAR -->
+      <nav class="navbar navbar-expand navbar-dark bg-transparent p-0">
+        <div class="container-fluid justify-content-center">
+          <ul class="navbar-nav centered-nav d-flex flex-wrap justify-content-center gap-1 gap-md-3">
+            <li class="nav-item"><a class="nav-link" href="#newsItemsSection">Invest</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#">Listing</a></li>
+            <li class="nav-item"><a class="nav-link" href="#nearbyBusinessesSection">Maps</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Contact Cards</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Brochures</a></li>
+          </ul>
+        </div>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="container mb-4">
+    
+    <!-- SEARCH BAR WRAPPER -->
+    <div class="row justify-content-center search-box-container mb-3">
+      <div class="col-12 col-md-8 col-lg-6">
+        <div class="position-relative">
+          <i class="bi bi-search search-icon-pos"></i>
+          <input 
+            type="search" 
+            id="directorySearch" 
+            class="form-control form-control-lg search-input-pill py-2.5" 
+            placeholder="Search directory (e.g., AGS, Novatek, Lusaka)..." 
+            aria-label="Search directory listings"
+            autocomplete="off"
+          >
+          <i class="bi bi-x-circle-fill clear-icon-pos" id="clearSearchBtn" title="Clear search"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEARCH RESULTS OVERLAY -->
+    <div id="searchResultsSection" style="display: none;" class="mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-2 px-1">
+        <span class="text-muted small fw-medium" id="searchResultsCount">Found 0 results</span>
+        <span class="badge bg-primary-subtle text-primary rounded-pill small">Search Mode</span>
+      </div>
+      <div class="row g-2" id="searchResultsList"></div>
+    </div>
+
+    <!-- MAIN SEGMENTS CONTAINER -->
+    <div id="mainContentSegments">
+      
+      <!-- SEGMENT 1: NEARBY BUSINESSES 2x2 GRID -->
+      <section id="nearbyBusinessesSection" class="card border-0 shadow-sm p-3 mb-3 top-segment-container">
+        <div class="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom">
+          <h3 class="h6 mb-0 fw-bold text-dark">
+            <i class="bi bi-building-check text-primary me-1"></i>Nearby Businesses
+          </h3>
+          <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-2 py-1" id="milestoneBadge" style="font-size: 0.7rem;">
+            Milestone: Detecting...
+          </span>
+        </div>
+
+        <!-- 2x2 Grid of Clean Dynamic Cards -->
+        <div class="row g-2" id="svgGridContainer">
+          <div class="col-6 svg-card-container">
+            <div class="svg-card-frame p-2" id="svgSlot0">
+              <div class="text-center p-2 text-muted small">Loading Card...</div>
+            </div>
+          </div>
+          <div class="col-6 svg-card-container">
+            <div class="svg-card-frame p-2" id="svgSlot1">
+              <div class="text-center p-2 text-muted small">Loading Card...</div>
+            </div>
+          </div>
+          <div class="col-6 svg-card-container">
+            <div class="svg-card-frame p-2" id="svgSlot2">
+              <div class="text-center p-2 text-muted small">Loading Card...</div>
+            </div>
+          </div>
+          <div class="col-6 svg-card-container">
+            <div class="svg-card-frame p-2" id="svgSlot3">
+              <div class="text-center p-2 text-muted small">Loading Card...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BOTTOM SHARED PORTION -->
+      <div class="row g-3">
+        
+        <!-- SEGMENT 2: NEWS ITEMS -->
+        <section class="col-md-6 mobile-full-width" id="newsItemsSection">
+          <div class="card border-0 shadow-sm p-2.5 h-100 bg-white">
+            <div class="d-flex justify-content-between align-items-center mb-2 border-bottom pb-1">
+              <h3 class="h6 mb-0 fw-bold text-dark">
+                <i class="bi bi-newspaper text-danger me-1"></i>News Items
+              </h3>
+              <small class="text-muted" style="font-size: 0.7rem;">Past week • Updates 10s</small>
+            </div>
+
+            <div id="newsCarouselContainer" class="p-1">
+              <div class="card border-light bg-light p-2.5">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="badge" id="newsScopeBadge" style="font-size: 0.7rem;">Local</span>
+                  <span class="badge bg-secondary" id="newsCategoryBadge" style="font-size: 0.7rem;">Business</span>
+                </div>
+                
+                <div class="news-image-box" id="newsImageBox"></div>
+
+                <h6 class="fw-bold my-1 text-dark" id="newsTitle">Loading news stories...</h6>
+                <p class="text-muted small mb-2" id="newsSummary">Please wait while recent news is updated.</p>
+                <div class="d-flex justify-content-between align-items-center mt-2 pt-1 border-top">
+                  <small class="text-muted" id="newsDate" style="font-size: 0.7rem;">Just now</small>
+                  <a href="#" id="newsLink" target="_blank" class="btn btn-xs btn-outline-primary py-0 px-2" style="font-size: 0.75rem;">Read Source <i class="bi bi-box-arrow-up-right"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <div id="mobileInterleavedFeed" class="d-md-none mt-2"></div>
+          </div>
+        </section>
+
+        <!-- SEGMENT 3: BUSINESS DIRECTORY -->
+        <section class="col-md-6 mobile-full-width desktop-only-directory" id="businessDirectorySection">
+          <div class="card border-0 shadow-sm p-2.5 h-100 bg-white">
+            <div class="d-flex justify-content-between align-items-center mb-2 border-bottom pb-1">
+              <h3 class="h6 mb-0 fw-bold text-dark">
+                <i class="bi bi-journal-bookmark-fill text-success me-1"></i>Business Directory
+              </h3>
+              <small class="text-muted" style="font-size: 0.7rem;">Nearest Contacts</small>
+            </div>
+
+            <div id="directoryContactsList" class="d-flex flex-column gap-2"></div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-white border-top py-3 text-center text-muted">
+    <div class="container">
+      <p class="small mb-0">&copy; Clickers&trade; 2026 • Indigo Directory Platform</p>
+      <p class="text-muted small mb-0" style="font-size: 0.7rem;">Stewards International Forum | Lusaka &bull; Kitwe &bull; Livingstone &bull; Dundumwezi</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const KNOWN_MILESTONES = [
+      { name: "Woodlands Stadium / Chilenje", lat: -15.4381, lon: 28.3228 },
+      { name: "Kamwala Market / South End", lat: -15.4265, lon: 28.2871 },
+      { name: "Manda Hill / Northmead", lat: -15.3995, lon: 28.2984 },
+      { name: "Levy Junction / Lusaka CBD", lat: -15.4167, lon: 28.2833 }
+    ];
+
+    const SVG_CARD_DATABASE = [
+      { 
+        id: 'svg1', 
+        milestone: "Woodlands Stadium / Chilenje", 
+        address: "Plot 104, Woodlands, Lusaka", 
+        name: "AGS Logistics", 
+        phone: "0966999333", 
+        mapUrl: "https://maps.google.com/?q=-15.4381,28.3228",
+        logoBg: "#eef2ff",
+        logoColor: "#4f46e5",
+        logoText: "AGS",
+        svgGraphic: `<rect width="200" height="60" rx="6" fill="#eef2ff"/><circle cx="35" cy="30" r="18" fill="#4f46e5"/><text x="35" y="34" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">AGS</text><text x="125" y="28" font-size="12" font-weight="bold" fill="#1e1b4b" text-anchor="middle">AGS LOGISTICS</text><text x="125" y="42" font-size="9" fill="#4338ca" text-anchor="middle">Worldwide Relocation</text>`
+      },
+      { 
+        id: 'svg2', 
+        milestone: "Woodlands Stadium / Chilenje", 
+        address: "Independence Ave, Chilenje", 
+        name: "Novatek Feeds", 
+        phone: "0977123456", 
+        mapUrl: "https://maps.google.com/?q=-15.4381,28.3228",
+        logoBg: "#dcfce7",
+        logoColor: "#166534",
+        logoText: "NOV",
+        svgGraphic: `<rect width="200" height="60" rx="6" fill="#f0fdf4"/><circle cx="35" cy="30" r="18" fill="#166534"/><text x="35" y="34" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">NOV</text><text x="125" y="28" font-size="12" font-weight="bold" fill="#14532d" text-anchor="middle">NOVATEK FEEDS</text><text x="125" y="42" font-size="9" fill="#15803d" text-anchor="middle">Stockfeeds & Nutrition</text>`
+      },
+      { 
+        id: 'svg3', 
+        milestone: "Woodlands Stadium / Chilenje", 
+        address: "Chris Corner Plaza, Lusaka", 
+        name: "Carsons Auto", 
+        phone: "0955888777", 
+        mapUrl: "https://maps.google.com/?q=-15.4381,28.3228",
+        logoBg: "#fef3c7",
+        logoColor: "#92400e",
+        logoText: "CAR",
+        svgGraphic: `<rect width="200" height="60" rx="6" fill="#fffbeb"/><circle cx="35" cy="30" r="18" fill="#d97706"/><text x="35" y="34" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">CAR</text><text x="125" y="28" font-size="12" font-weight="bold" fill="#78350f" text-anchor="middle">CARSONS AUTO</text><text x="125" y="42" font-size="9" fill="#b45309" text-anchor="middle">Transport & Clearing</text>`
+      },
+      { 
+        id: 'svg4', 
+        milestone: "Woodlands Stadium / Chilenje", 
+        address: "Kabulonga Road, Lusaka", 
+        name: "Marcopolo Tiles", 
+        phone: "0966111222", 
+        mapUrl: "https://maps.google.com/?q=-15.4381,28.3228",
+        logoBg: "#fee2e2",
+        logoColor: "#991b1b",
+        logoText: "MPT",
+        svgGraphic: `<rect width="200" height="60" rx="6" fill="#fef2f2"/><circle cx="35" cy="30" r="18" fill="#dc2626"/><text x="35" y="34" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">MPT</text><text x="125" y="28" font-size="12" font-weight="bold" fill="#7f1d1d" text-anchor="middle">MARCOPOLO TILES</text><text x="125" y="42" font-size="9" fill="#b91c1c" text-anchor="middle">Ceramic & Porcelain</text>`
+      },
+      { 
+        id: 'svg5', 
+        milestone: "Woodlands Stadium / Chilenje", 
+        address: "Nyati Road, Woodlands", 
+        name: "Binastore Lusaka", 
+        phone: "0977333444", 
+        mapUrl: "https://maps.google.com/?q=-15.4381,28.3228",
+        logoBg: "#e0f2fe",
+        logoColor: "#075985",
+        logoText: "BIN",
+        svgGraphic: `<rect width="200" height="60" rx="6" fill="#f0f9ff"/><circle cx="35" cy="30" r="18" fill="#0284c7"/><text x="35" y="34" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">BIN</text><text x="125" y="28" font-size="12" font-weight="bold" fill="#0c4a6e" text-anchor="middle">BINASTORE HARDWARE</text><text x="125" y="42" font-size="9" fill="#0369a1" text-anchor="middle">Building Materials</text>`
+      },
+      { 
+        id: 'svg6', 
+        milestone: "Manda Hill / Northmead", 
+        address: "Great East Road, Lusaka", 
+        name: "Manda Hill Retail", 
+        phone: "0211250000", 
+        mapUrl: "https://maps.google.com/?q=-15.3995,28.2984",
+        logoBg: "#f3e8ff",
+        logoColor: "#6b21a8",
+        logoText: "MHL",
+        svgGraphic: `<rect width="200" height="60" rx="6" fill="#faf5ff"/><circle cx="35" cy="30" r="18" fill="#9333ea"/><text x="35" y="34" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">MHL</text><text x="125" y="28" font-size="11" font-weight="bold" fill="#581c87" text-anchor="middle">MANDA HILL SHOPPING</text><text x="125" y="42" font-size="9" fill="#7e22ce" text-anchor="middle">Retail & Outlets</text>`
+      },
+      { 
+        id: 'svg7', 
+        milestone: "Levy Junction / Lusaka CBD", 
+        address: "Church Road, Lusaka", 
+        name: "Levy Shopping Mall", 
+        phone: "0211300100", 
+        mapUrl: "https://maps.google.com/?q=-15.4167,28.2833",
+        logoBg: "#ccfbf1",
+        logoColor: "#115e59",
+        logoText: "LVY",
+        svgGraphic: `<rect width="200" height="60" rx="6" fill="#f0fdfa"/><circle cx="35" cy="30" r="18" fill="#0d9488"/><text x="35" y="34" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">LVY</text><text x="125" y="28" font-size="11" font-weight="bold" fill="#134e4a" text-anchor="middle">LEVY JUNCTION MALL</text><text x="125" y="42" font-size="9" fill="#0f766e" text-anchor="middle">Commercial Hub</text>`
+      }
+    ];
+
+    const NEWS_DATABASE = [
+      { 
+        title: "Zambia Trade Bureau Expands SME Credit Access Scheme", 
+        category: "Business", 
+        scope: "Local", 
+        date: "Sep 22, 2026", 
+        summary: "New micro-financing channels opened for local businesses across Lusaka.", 
+        link: "#",
+        imgSvg: `<svg width="100%" height="100%" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#1e3a8a"/><circle cx="80" cy="75" r="45" fill="#3b82f6" opacity="0.6"/><circle cx="280" cy="120" r="70" fill="#60a5fa" opacity="0.3"/><path d="M 50 110 L 120 70 L 190 90 L 260 40 L 330 65" stroke="#38bdf8" stroke-width="6" fill="none"/><circle cx="330" cy="65" r="8" fill="#facc15"/><text x="20" y="35" fill="#ffffff" font-family="'Inter', sans-serif" font-size="18" font-weight="bold">SME FINANCE & GROWTH</text></svg>`
+      },
+      { 
+        title: "Global Supply Chains Stabilize Across Agricultural Sectors", 
+        category: "Economy", 
+        scope: "Foreign", 
+        date: "Sep 21, 2026", 
+        summary: "Grain and fertilizer shipment indices indicate reduced freight costs worldwide.", 
+        link: "#",
+        imgSvg: `<svg width="100%" height="100%" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#065f46"/><path d="M 0 150 Q 100 80 200 150 T 400 150" fill="#047857"/><circle cx="320" cy="40" r="25" fill="#fef08a" opacity="0.8"/><text x="20" y="35" fill="#ffffff" font-family="'Inter', sans-serif" font-size="18" font-weight="bold">GLOBAL TRADE REPORT</text></svg>`
+      },
+      { 
+        title: "Kafue Hydro Expansion Boosts Commercial Power Reliability", 
+        category: "Business", 
+        scope: "Local", 
+        date: "Sep 20, 2026", 
+        summary: "Increased generation output benefits local industrial parks.", 
+        link: "#",
+        imgSvg: `<svg width="100%" height="100%" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#0f172a"/><polygon points="180,20 220,20 190,70 230,70 160,130 180,80 140,80" fill="#facc15"/><text x="20" y="35" fill="#ffffff" font-family="'Inter', sans-serif" font-size="18" font-weight="bold">ENERGY & INFRASTRUCTURE</text></svg>`
+      },
+      { 
+        title: "Advances in Pediatric Nutrition Yield Better Growth Outcomes", 
+        category: "Nutrition and Health", 
+        scope: "Foreign", 
+        date: "Sep 19, 2026", 
+        summary: "Recent international trials highlight fortification strategies.", 
+        link: "#",
+        imgSvg: `<svg width="100%" height="100%" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#831843"/><circle cx="200" cy="75" r="50" fill="#db2777" opacity="0.5"/><path d="M 170 75 Q 200 45 230 75 T 290 75" stroke="#fbcfe8" stroke-width="4" fill="none"/><text x="20" y="35" fill="#ffffff" font-family="'Inter', sans-serif" font-size="18" font-weight="bold">HEALTH & NUTRITION</text></svg>`
+      }
+    ];
+
+    let currentMilestone = KNOWN_MILESTONES[0].name;
+    let activeLocationSvgs = [];
+    let svgRotationIndex = 0;
+    let newsRotationIndex = 0;
+
+    function getDistanceKm(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+    }
+
+    function detectNearestMilestone(lat, lon) {
+      let closest = KNOWN_MILESTONES[0];
+      let minDistance = getDistanceKm(lat, lon, closest.lat, closest.lon);
+
+      for (let i = 1; i < KNOWN_MILESTONES.length; i++) {
+        let dist = getDistanceKm(lat, lon, KNOWN_MILESTONES[i].lat, KNOWN_MILESTONES[i].lon);
+        if (dist < minDistance) {
+          minDistance = dist;
+          closest = KNOWN_MILESTONES[i];
+        }
+      }
+
+      currentMilestone = closest.name;
+      document.getElementById('milestoneBadge').textContent = `Milestone: ${closest.name}`;
+      filterSvgsByMilestone();
+    }
+
+    function filterSvgsByMilestone() {
+      activeLocationSvgs = SVG_CARD_DATABASE.filter(svg => svg.milestone === currentMilestone);
+      if (activeLocationSvgs.length < 4) activeLocationSvgs = SVG_CARD_DATABASE;
+      svgRotationIndex = 0;
+      renderSvgCards();
+    }
+
+    function renderSvgCards() {
+      for (let slot = 0; slot < 4; slot++) {
+        const itemIndex = (svgRotationIndex + slot) % activeLocationSvgs.length;
+        const data = activeLocationSvgs[itemIndex];
+        const slotElem = document.getElementById(`svgSlot${slot}`);
+
+        slotElem.innerHTML = `
+          <div class="d-flex align-items-center justify-content-between border-bottom pb-1">
+            <span class="badge bg-light text-dark border" style="font-size:0.65rem;"><i class="bi bi-filetype-svg text-primary me-1"></i>Card</span>
+            <small class="text-muted text-truncate ms-1" style="font-size:0.65rem;"><i class="bi bi-geo-alt"></i> ${data.milestone}</small>
+          </div>
+          <div class="svg-graphic-wrapper">
+            <svg viewBox="0 0 200 60" preserveAspectRatio="xMidYMid meet">
+              ${data.svgGraphic}
+            </svg>
+          </div>
+          <div class="border-top pt-1">
+            <div class="fw-bold text-truncate text-dark" style="font-size:0.8rem;" title="${data.name}">${data.name}</div>
+            <div class="small text-muted text-truncate" style="font-size:0.7rem;" title="${data.address}">${data.address}</div>
+            <div class="mt-1 d-flex justify-content-between align-items-center">
+              <span class="small text-truncate me-1" style="font-size:0.68rem;"><i class="bi bi-telephone"></i> ${data.phone}</span>
+              <a href="${data.mapUrl}" target="_blank" class="btn btn-xs btn-outline-primary py-0 px-1.5 flex-shrink-0" style="font-size: 0.65rem;">Map</a>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    setInterval(() => {
+      svgRotationIndex = (svgRotationIndex + 4) % activeLocationSvgs.length;
+      renderSvgCards();
+    }, 45000);
+
+    function renderNewsTicker() {
+      const newsItem = NEWS_DATABASE[newsRotationIndex];
+      const scopeBadge = document.getElementById('newsScopeBadge');
+      
+      scopeBadge.textContent = newsItem.scope;
+      scopeBadge.className = newsItem.scope === 'Local' ? 'badge news-badge-local' : 'badge news-badge-foreign';
+
+      document.getElementById('newsCategoryBadge').textContent = newsItem.category;
+      document.getElementById('newsImageBox').innerHTML = newsItem.imgSvg;
+      document.getElementById('newsTitle').textContent = newsItem.title;
+      document.getElementById('newsSummary').textContent = newsItem.summary;
+      document.getElementById('newsDate').textContent = newsItem.date;
+      document.getElementById('newsLink').href = newsItem.link;
+
+      newsRotationIndex = (newsRotationIndex + 1) % NEWS_DATABASE.length;
+    }
+
+    setInterval(renderNewsTicker, 10000);
+
+    function renderBusinessDirectory() {
+      const directoryContainer = document.getElementById('directoryContactsList');
+      directoryContainer.innerHTML = '';
+
+      activeLocationSvgs.forEach((biz) => {
+        const cardHtml = `
+          <div class="p-2 border rounded bg-light d-flex align-items-center gap-2">
+            <div class="flex-shrink-0 d-flex align-items-center justify-content-center fw-bold rounded" style="width: 40px; height: 40px; background-color: ${biz.logoBg}; color: ${biz.logoColor}; font-size: 0.85rem;">
+              ${biz.logoText}
+            </div>
+            <div class="flex-grow-1 min-w-0">
+              <h6 class="fw-bold mb-0 text-dark text-truncate" style="font-size: 0.825rem;">${biz.name}</h6>
+              <p class="small text-muted mb-1 text-truncate" style="font-size: 0.725rem;"><i class="bi bi-geo-alt-fill text-danger me-1"></i>${biz.address}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="small text-muted" style="font-size: 0.7rem;"><i class="bi bi-telephone-fill me-1"></i>${biz.phone}</span>
+                <a href="${biz.mapUrl}" target="_blank" class="btn btn-xs btn-success py-0 px-2" style="font-size: 0.65rem;">Map</a>
+              </div>
+            </div>
+          </div>
+        `;
+        directoryContainer.insertAdjacentHTML('beforeend', cardHtml);
+      });
+    }
+
+    function buildMobileInterleavedFeed() {
+      const mobileFeed = document.getElementById('mobileInterleavedFeed');
+      mobileFeed.innerHTML = '';
+
+      NEWS_DATABASE.forEach((news, idx) => {
+        const newsCard = `
+          <div class="card border mb-2 p-2 bg-light">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="badge ${news.scope === 'Local' ? 'news-badge-local' : 'news-badge-foreign'}" style="font-size:0.65rem;">${news.scope}</span>
+              <span class="badge bg-secondary" style="font-size:0.65rem;">${news.category}</span>
+            </div>
+            <div class="news-image-box" style="height: 80px;">${news.imgSvg}</div>
+            <h6 class="fw-bold mb-1" style="font-size:0.8rem;">${news.title}</h6>
+            <p class="small text-muted mb-1" style="font-size:0.75rem;">${news.summary}</p>
+            <a href="${news.link}" target="_blank" class="btn btn-xs btn-outline-primary py-0 px-2 align-self-start" style="font-size:0.7rem;">Read Source</a>
+          </div>
+        `;
+        mobileFeed.insertAdjacentHTML('beforeend', newsCard);
+
+        if ((idx + 1) % 2 === 0) {
+          const bizIndex = Math.floor(idx / 2) % activeLocationSvgs.length;
+          const biz = activeLocationSvgs[bizIndex];
+          const interleavedBizCard = `
+            <div class="card border border-success mb-2 p-2 bg-success-subtle">
+              <small class="text-success fw-bold mb-1" style="font-size:0.65rem;"><i class="bi bi-building"></i> FEATURED LOCAL CONTACT</small>
+              <div class="d-flex align-items-center gap-2">
+                <div class="flex-shrink-0 d-flex align-items-center justify-content-center fw-bold rounded" style="width: 36px; height: 36px; background-color: ${biz.logoBg}; color: ${biz.logoColor}; font-size: 0.8rem;">
+                  ${biz.logoText}
+                </div>
+                <div class="flex-grow-1 min-w-0">
+                  <h6 class="fw-bold mb-0" style="font-size:0.85rem;">${biz.name}</h6>
+                  <p class="small text-muted mb-0" style="font-size:0.725rem;">${biz.address}</p>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-2 pt-1 border-top border-success-subtle">
+                <span class="small fw-bold" style="font-size:0.75rem;"><i class="bi bi-telephone me-1"></i>${biz.phone}</span>
+                <a href="${biz.mapUrl}" target="_blank" class="btn btn-xs btn-success py-0 px-2" style="font-size:0.7rem;">Google Maps</a>
+              </div>
+            </div>
+          `;
+          mobileFeed.insertAdjacentHTML('beforeend', interleavedBizCard);
+        }
+      });
+    }
+
+    const searchInput = document.getElementById('directorySearch');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+
+    function handleSearch() {
+      const query = searchInput.value.toLowerCase().trim();
+      const resultsSection = document.getElementById('searchResultsSection');
+      const resultsList = document.getElementById('searchResultsList');
+      const mainSegments = document.getElementById('mainContentSegments');
+      const resultsCountText = document.getElementById('searchResultsCount');
+
+      if (query.length > 0) {
+        mainSegments.style.display = 'none';
+        resultsSection.style.display = 'block';
+        clearSearchBtn.style.display = 'block';
+        resultsList.innerHTML = '';
+
+        const matched = SVG_CARD_DATABASE.filter(item => 
+          item.name.toLowerCase().includes(query) || 
+          item.address.toLowerCase().includes(query) ||
+          item.milestone.toLowerCase().includes(query)
+        );
+
+        resultsCountText.textContent = `Found ${matched.length} result${matched.length === 1 ? '' : 's'}`;
+
+        if (matched.length > 0) {
+          matched.forEach(item => {
+            resultsList.insertAdjacentHTML('beforeend', `
+              <div class="col-md-6">
+                <div class="card p-2.5 shadow-sm border bg-white">
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <div class="d-flex align-items-center justify-content-center fw-bold rounded" style="width: 36px; height: 36px; background-color: ${item.logoBg}; color: ${item.logoColor}; font-size: 0.8rem;">
+                      ${item.logoText}
+                    </div>
+                    <div>
+                      <h6 class="fw-bold text-dark mb-0">${item.name}</h6>
+                      <small class="text-secondary" style="font-size:0.7rem;">Milestone: ${item.milestone}</small>
+                    </div>
+                  </div>
+                  <p class="mb-1 text-muted small"><i class="bi bi-geo-alt me-1"></i>${item.address}</p>
+                  <div class="mt-2 pt-1 border-top d-flex justify-content-between align-items-center">
+                    <span class="small"><i class="bi bi-telephone me-1"></i>${item.phone}</span>
+                    <a href="${item.mapUrl}" target="_blank" class="btn btn-xs btn-outline-primary py-0 px-2" style="font-size:0.7rem;">View Map</a>
+                  </div>
+                </div>
+              </div>
+            `);
+          });
+        } else {
+          resultsList.innerHTML = `<div class="col-12 text-muted py-3 text-center">No matching listings found.</div>`;
+        }
+      } else {
+        resultsSection.style.display = 'none';
+        clearSearchBtn.style.display = 'none';
+        mainSegments.style.display = 'block';
+      }
+    }
+
+    searchInput.addEventListener('input', handleSearch);
+
+    clearSearchBtn.addEventListener('click', function() {
+      searchInput.value = '';
+      handleSearch();
+      searchInput.focus();
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      filterSvgsByMilestone();
+      renderNewsTicker();
+      renderBusinessDirectory();
+      buildMobileInterleavedFeed();
+
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            detectNearestMilestone(pos.coords.latitude, pos.coords.longitude);
+            renderBusinessDirectory();
+            buildMobileInterleavedFeed();
+          },
+          (err) => {
+            document.getElementById('milestoneBadge').textContent = `Milestone: ${currentMilestone}`;
+          }
+        );
+      }
+    });
+  </script>
+</body>
+
+</html>
