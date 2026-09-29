@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clickers - Indigo Directory &amp; Local Hub</title>
+  <meta name="description" content="Clickers / INDIGO: A Listing Search Engine for local companies, institutions, and services in Zambia.">
+  <meta name="keywords" content="Zambia, Indigo, Clickers, Lusaka, Livingstone, Kitwe, Listing, Directory, News">
+  <meta name="author" content="Stewards International Forum">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --indigo-primary: #0d6efd;
+      --indigo-dark: #0a2540;
+      --indigo-light-bg: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    /* PAGE SCROLL ENABLED */
+    html, body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 'Inter', Helvetica, Arial, sans-serif;
+      background-color: var(--indigo-light-bg);
+      color: #334155;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.3;
+      font-size: 0.9rem;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+      line-height: 1.2;
+      margin-bottom: 0.35rem;
+    }
+
+    p {
+      margin-bottom: 0.4rem;
+      line-height: 1.35;
+    }
+
+    .brand-header-wrapper {
+      position: relative;
+      background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 50%, #0d6efd 100%);
+      padding-top: 1rem;
+      padding-bottom: 2.25rem;
+    }
+
+    .centered-nav .nav-link {
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 500;
+      padding: 0.25rem 0.75rem !important;
+      font-size: 0.85rem;
+      transition: color 0.2s ease;
+    }
+
+    .centered-nav .nav-link:hover,
+    .centered-nav .nav-link.active {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .search-box-container {
+      position: relative;
+      margin-top: -1.4rem;
+      z-index: 10;
+    }
+
+    .search-input-pill {
+      border-radius: 50rem !important;
+      padding-left: 3.25rem;
+      padding-right: 3rem;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      background-color: #ffffff;
+    }
+
+    .search-input-pill:focus {
+      box-shadow: 0 12px 28px -4px rgba(13, 110, 253, 0.25);
+      border-color: var(--indigo-primary);
+    }
+
+    .search-icon-pos {
+      position: absolute;
+      left: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 1.1rem;
+      pointer-events: none;
+    }
+
+    .clear-icon-pos {
+      position: absolute;
+      right: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: none;
+    }
+
+    .top-segment-container {
+      background-color: #ffffff;
+      border-radius: 8px;
+    }
+
+    /* 4 Columns x 2 Rows Grid Layout for Desktop */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    /* Card Slot */
+    .card-slot {
+      position: relative;
+      height: 220px;
+    }
+
+    /* Biz Card Box */
+    .biz-card {
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Top Bar Header */
+    .card-topbar {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    .badge-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 5px;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      background-color: #ffffff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #1e293b;
+      flex-shrink: 0;
+    }
+
+    .badge-card svg {
+      width: 9px;
+      height: 9px;
+      stroke: #6366f1;
+    }
+
+    .topbar-milestone {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 0.58rem;
+      color: #64748b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-grow: 1;
+    }
+
+    .topbar-milestone svg {
+      width: 9px;
+      height: 9px;
+      stroke: #94a3b8;
+      flex-shrink: 0;
+    }
+
+    .topbar-milestone span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Featured Media Image */
+    .card-media {
+      width: 100%;
+      flex-grow: 1;
+      min-height: 80px;
+      border-radius: 5px;
+      overflow: hidden;
+      background-color: #f1f5f9;
+      margin-bottom: 4px;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Content Body */
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 4px;
+      overflow: hidden;
+    }
+
+    .card-name {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+      margin: 0 0 1px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+    }
+
+    .card-address {
+      font-size: 0.55rem;
+      color: #64748b;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Action Section */
+    .card-actions {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    /* Top Row Buttons */
+    .action-row-main {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .btn-biz {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 20px;
+      border-radius: 10px;
+      font-size: 0.55rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+
+    .btn-biz svg {
+      width: 9px;
+      height: 9px;
+      flex-shrink: 0;
+    }
+
+    /* Call Button */
+    .btn-call {
+      flex: 1;
+      gap: 2px;
+      border: 1px solid #16a34a;
+      color: #16a34a;
+      background-color: #ffffff;
+    }
+    .btn-call svg { stroke: #16a34a; }
+    .btn-call:hover { background-color: #f0fdf4; color: #16a34a; }
+
+    /* Map Button */
+    .btn-map {
+      flex: 1;
+      gap: 2px;
+      border: 1px solid #2563eb;
+      color: #2563eb;
+      background-color: #ffffff;
+    }
+    .btn-map svg { stroke: #2563eb; }
+    .btn-map:hover { background-color: #eff6ff; color: #2563eb; }
+
+    /* Small Green Icon Buttons (Fund & Info) */
+    .btn-icon-green {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid #16a34a;
+      background-color: #f0fdf4;
+      color: #16a34a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .btn-icon-green svg {
+      width: 10px;
+      height: 10px;
+      stroke: #16a34a;
+    }
+
+    .btn-icon-green:hover {
+      background-color: #16a34a;
+      color: #ffffff;
+    }
+
+    .btn-icon-green:hover svg {
+      stroke: #ffffff;
+    }
+
+    /* Bottom Action Row (WhatsApp + Links) */
+    .action-row-secondary {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* WhatsApp Button */
+    .btn-whatsapp {
+      flex: 1;
+      gap: 2px;
+      border: 1px solid #0d9488;
+      color: #0d9488;
+      background-color: #ffffff;
+    }
+    .btn-whatsapp svg { stroke: #0d9488; }
+    .btn-whatsapp:hover { background-color: #f0fdfa; color: #0d9488; }
+
+    /* Left-Aligned Email & Website Links */
+    .card-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      text-align: left;
+      overflow: hidden;
+    }
+
+    .card-link {
+      font-size: 0.5rem;
+      color: #475569;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .card-link svg {
+      width: 8px;
+      height: 8px;
+      stroke: #64748b;
+      flex-shrink: 0;
+    }
+
+    .card-link:hover {
+      color: #2563eb;
+      text-decoration: underline;
+    }
+
+    /* Double Column Mobile Layout */
+    @media (max-width: 800px) {
+      .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+      }
+      .card-slot {
+        height: 215px;
+      }
+      .biz-card {
+        padding: 5px;
+      }
+      .card-name {
+        font-size: 0.6rem;
+      }
+      .card-address {
+        font-size: 0.5rem;
+      }
+    }
+
+    .news-image-box {
+      width: 100%;
+      height: 95px;
+      border-radius: 6px;
+      overflow: hidden;
+      background-color: #e2e8f0;
+      margin-bottom: 0.5rem;
+    }
+
+    .news-image-box svg, .news-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .floating-join-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1050;
+      background-color: #32CD32;
+      color: #000080 !important;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.55rem 1.25rem;
+      border-radius: 50rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .floating-join-btn:hover {
+      background-color: #000080;
+      color: #999999 !important;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Category Filter Pills & Hidden Scrollbar */
+    .filter-pills-wrapper {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding-bottom: 0.1rem;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .filter-pills-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-pill {
+      border: 1px solid #cbd5e1;
+      background-color: #ffffff;
+      color: #475569;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50rem;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-pill:hover, .filter-pill.active {
+      background-color: var(--indigo-primary);
+      color: #ffffff;
+      border-color: var(--indigo-primary);
+    }
+
+    /* Compact Scroll Triangles */
+    .scroll-arrow-btn {
+      background: transparent;
+      border: none;
+      color: #0d6efd;
+      font-size: 0.75rem;
+      padding: 0 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.8;
+      transition: opacity 0.2s ease, transform 0.1s ease;
+      line-height: 1;
+    }
+
+    .scroll-arrow-btn:hover {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+
+    @media (max-width: 767.98px) {
+      .mobile-full-width {
+        width: 100% !important;
+      }
+      .desktop-only-directory {
+        display: none !important;
+      }
+      .floating-join-btn {
+        bottom: 16px;
+        right: 16px;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+      }
+    }
+
+    .news-badge-local {
+      background-color: #0d6efd;
+      color: #ffffff;
+    }
+    .news-badge-foreign {
+      background-color: #6c757d;
+      color: #ffffff;
+    }
+
+    footer {
+      margin-top: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- BRAND HEADER WITH BLUE GRADIENT OVERLAY -->
+  <header class="brand-header-wrapper text-center">
+    <div class="container">
+      
+      <!-- CENTERED CLICKERS BRAND LOGO -->
+      <div class="mb-1">
+        <img class="p-2 mb-1 img-fluid" style="height:85px" src="Clickers logo.png" alt=".digital integrity"> 
+      </div>
+
+      <p class="text-white-50 small mb-2" style="font-size: 0.75rem;">Zambia Business Search Engine &amp; Directory Hub</p>
+
+      <!-- CENTERED NAVIGATION BAR -->
+      <nav class="navbar navbar-expand navbar-dark bg-transparent p-0">
+        <div class="container-fluid justify-content-center">
+          <ul class="navbar-nav centered-nav d-flex flex-wrap justify-content-center gap-1 gap-md-3">
+            <li class="nav-item"><a class="nav-link" href="#newsItemsSection">Invest</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#">Listing</a></li>
+            <li class="nav-item"><a class="nav-link" href="#nearbyBusinessesSection">Maps</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Contact Cards</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Brochures</a></li>
+          </ul>
+        </div>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="container mb-3 flex-grow-1">
+    
+    <!-- SEARCH BAR WRAPPER -->
+    <div class="row justify-content-center search-box-container mb-2">
+      <div class="col-12 col-md-8 col-lg-6">
+        <div class="position-relative">
+          <i class="bi bi-search search-icon-pos"></i>
+          <input type="search" id="directorySearch" class="form-control form-control-lg search-input-pill py-2.5" placeholder="Search directory (e.g., AGS, Abacus360, Lusaka)..." aria-label="Search directory listings" autocomplete="off">
+          <i class="bi bi-x-circle-fill clear-icon-pos" id="clearSearchBtn" title="Clear search"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY FILTER PILLS WITH COMPACT ARROWS -->
+    <div class="mb-2 position-relative d-flex align-items-center">
+      <button id="scrollLeftBtn" class="scroll-arrow-btn me-1" aria-label="Scroll left">
+        <i class="bi bi-caret-left-fill"></i>
+      </button>
+
+      <div class="filter-pills-wrapper flex-grow-1" id="categoryFilterContainer">
+        <button class="filter-pill active" data-category="All"><i class="bi bi-grid-fill me-1"></i>All Services</button>
+        <button class="filter-pill" data-category="Accounting & Finance"><i class="bi bi-calculator me-1"></i>Accounting & Finance</button>
+        <button class="filter-pill" data-category="Logistics"><i class="bi bi-truck me-1"></i>Logistics</button>
+        <button class="filter-pill" data-category="Agriculture"><i class="bi bi-flower1 me-1"></i>Agriculture</button>
+        <button class="filter-pill" data-category="Automotive"><i class="bi bi-car-front-fill me-1"></i>Automotive</button>
+        <button class="filter-pill" data-category="Construction"><i class="bi bi-tools me-1"></i>Construction</button>
+        <button class="filter-pill" data-category="Retail"><i class="bi bi-bag-check-fill me-1"></i>Retail & Malls</button>
+      </div>
+
+      <button id="scrollRightBtn" class="scroll-arrow-btn ms-1" aria-label="Scroll right">
+        <i class="bi bi-caret-right-fill"></i>
+      </button>
+    </div>
+
+    <!-- SEARCH RESULTS OVERLAY -->
+    <div id="searchResultsSection" style="display: none;" class="mb-3">
+      <div class="d-flex justify-content-between align-items-center mb-2 px-1">
+        <span class="text-muted small fw-medium" id="searchResultsCount">Found 0 results</span>
+        <span class="badge bg-primary-subtle text-primary rounded-pill small">Search Mode</span>
+      </div>
+      <div class="row g-2" id="searchResultsList"></div>
+    </div>
+
+    <!-- MAIN SEGMENTS CONTAINER -->
+    <div id="mainContentSegments">
+      
+      <!-- SEGMENT 1: NEARBY BUSINESSES 4x2 GRID -->
+      <section id="nearbyBusinessesSection" class="card border-0 shadow-sm p-2.5 mb-2.5 top-segment-container">
+        <div class="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom">
+          <h3 class="h6 mb-0 fw-bold text-dark">
+            <i class="bi bi-building-check text-primary me-1"></i>Nearby Businesses
+          </h3>
+          <span class="badge bg-primary-subtle text-primary rounded-pill" style="font-size:0.65rem;" id="activeMilestoneBadge">Auto Sync • 20s</span>
+        </div>
+        <!-- 2x4 on Mobile / 4x2 on Desktop Grid Container -->
+        <div class="grid-container" id="grid">
+          <div class="card-slot" id="slot-0"></div>
+          <div class="card-slot" id="slot-1"></div>
+          <div class="card-slot" id="slot-2"></div>
+          <div class="card-slot" id="slot-3"></div>
+          <div class="card-slot" id="slot-4"></div>
+          <div class="card-slot" id="slot-5"></div>
+          <div class="card-slot" id="slot-6"></div>
+          <div class="card-slot" id="slot-7"></div>
+        </div>
+      </section>
+
+      <!-- BOTTOM SHARED PORTION -->
+      <div class="row g-2">
+        
+        <!-- SEGMENT 2: NEWS ITEMS -->
+        <section class="col-md-6 mobile-full-width" id="newsItemsSection">
+          <div class="card border-0 shadow-sm p-2.5 h-100 bg-white">
+            <div class="d-flex justify-content-between align-items-center mb-2 border-bottom pb-1">
+              <h3 class="h6 mb-0 fw-bold text-dark">
+                <i class="bi bi-newspaper text-danger me-1"></i>News Items
+              </h3>
+              <small class="text-muted" style="font-size: 0.7rem;">Updates 10s</small>
+            </div>
+
+            <div id="newsCarouselContainer" class="p-1">
+              <div class="card border-light bg-light p-2">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="badge news-badge-local" id="newsScopeBadge" style="font-size: 0.65rem;">Local</span>
+                  <span class="badge bg-secondary" id="newsCategoryBadge" style="font-size: 0.65rem;">Business</span>
+                </div>
+                
+                <div class="news-image-box" id="newsImageBox">
+                  <img src="https://picsum.photos/id/180/500/250" alt="News Image">
+                </div>
+
+                <h6 class="fw-bold my-1 text-dark text-truncate" id="newsTitle" style="font-size: 0.85rem;">Zambian Economy Shows Strong Growth in Q3</h6>
+                <p class="text-muted small mb-2 text-truncate" id="newsSummary" style="font-size: 0.75rem;">Key sectors including mining and commercial finance record double-digit growth in recent quarters.</p>
+                <div class="d-flex justify-content-between align-items-center mt-1 pt-1 border-top">
+                  <small class="text-muted" id="newsDate" style="font-size: 0.65rem;">Sep 2026</small>
+                  <a href="#" id="newsLink" target="_blank" class="btn btn-xs btn-outline-primary py-0 px-2" style="font-size: 0.7rem;">Read Source <i class="bi bi-box-arrow-up-right"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <div id="mobileInterleavedFeed" class="d-md-none mt-2"></div>
+          </div>
+        </section>
+
+        <!-- SEGMENT 3: BUSINESS DIRECTORY -->
+        <section class="col-md-6 mobile-full-width desktop-only-directory" id="businessDirectorySection">
+          <div class="card border-0 shadow-sm p-2.5 h-100 bg-white">
+            <div class="d-flex justify-content-between align-items-center mb-2 border-bottom pb-1">
+              <h3 class="h6 mb-0 fw-bold text-dark">
+                <i class="bi bi-journal-bookmark-fill text-success me-1"></i>Business Directory
+              </h3>
+              <small class="text-muted" style="font-size: 0.7rem;">Nearest Contacts</small>
+            </div>
+
+            <div id="directoryContactsList" class="d-flex flex-column gap-2"></div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-white border-top py-2 text-center text-muted">
+    <div class="container">
+      <p class="small mb-0" style="font-size: 0.75rem;">© Clickers™ 2026 • Indigo Directory Platform</p>
+      <p class="text-muted small mb-0" style="font-size: 0.65rem;">Stewards International Forum | Lusaka • Kitwe • Livingstone • Dundumwezi</p>
+    </div>
+  </footer>
+
+  <!-- Dynamic Map Modal -->
+  <div class="modal fade" id="mapModal" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header py-2 px-3">
+          <h6 class="modal-header-title mb-0 fw-bold" id="mapModalLabel"><i class="bi bi-geo-alt-fill text-danger me-1"></i> Location Map</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="ratio ratio-16x9 rounded overflow-hidden border mb-2">
+            <iframe id="mapModalIframe" src="" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <div class="d-flex justify-content-between align-items-center px-1">
+            <span class="small text-muted text-truncate me-2" id="mapModalAddress" style="font-size: 0.75rem;"></span>
+            <a href="#" id="mapModalDirectLink" target="_blank" class="btn btn-xs btn-primary py-1 px-2 flex-shrink-0" style="font-size:0.75rem;">
+              Open Google Maps <i class="bi bi-box-arrow-up-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Join Action Button -->
+  <a href="https://clickersz.github.io/join/company_registration_form.html" class="floating-join-btn" aria-label="Join">
+    <i class="bi bi-plus-circle-fill"></i>
+    <span>Join</span>
+  </a>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ==========================================
+    // Accounting & Directory Database Integration (100 Entries)
+    // ==========================================
+    const ACCOUNTING_DATABASE = [
+      { id: "acc1", category: "Accounting & Finance", milestone: "Stand J8 Bata Boulevard Showgrounds, Lusaka", address: "Stand J8 Bata Boulevard Showgrounds, Lusaka", name: "ABACUS360", phone: "+260 211 258340", whatsapp: "260977258340", email: "info@abacus360.com", website: "https://www.abacus360.com", mapUrl: "https://maps.google.com/?q=ABACUS360,+Stand+J8+Bata+Boulevard+Showgrounds,+Lusaka", featuredImage: "https://picsum.photos/id/10/500/300" },
+      { id: "acc2", category: "Accounting & Finance", milestone: "No. 2664 Malambo Road, Lusaka", address: "No. 2664 Malambo Road, Lusaka", name: "ABC ACCOUNTING AND BUSINESS CONSULTANTS", phone: "0967 822786", whatsapp: "260967822786", email: "info@abcaccounting.com", website: "https://www.abcaccounting.com", mapUrl: "https://maps.google.com/?q=ABC+ACCOUNTING+AND+BUSINESS+CONSULTANTS,+No.+2664+Malambo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/20/500/300" },
+      { id: "acc3", category: "Accounting & Finance", milestone: "45-12th Street Nchanga South, Chingola", address: "45-12th Street Nchanga South, Chingola", name: "ACMEGUIDE CHARTERED ACCOUNTANTS", phone: "0967 550641", whatsapp: "260967550641", email: "info@acmeguide.com", website: "https://www.acmeguide.com", mapUrl: "https://maps.google.com/?q=ACMEGUIDE+CHARTERED+ACCOUNTANTS,+45-12th+Street+Nchanga+South,+Chingola", featuredImage: "https://picsum.photos/id/30/500/300" },
+      { id: "acc4", category: "Accounting & Finance", milestone: "5 Chingombe Road, Rhodes Park, Lusaka", address: "5 Chingombe Road, Rhodes Park, Lusaka", name: "ACTCO ACCOUNTANTS", phone: "0977 827272", whatsapp: "260977827272", email: "info@actco.com", website: "https://www.actco.com", mapUrl: "https://maps.google.com/?q=ACTCO+ACCOUNTANTS,+5+Chingombe+Road,+Rhodes+Park,+Lusaka", featuredImage: "https://picsum.photos/id/40/500/300" },
+      { id: "acc5", category: "Accounting & Finance", milestone: "Shop 26 Blessings Mall, Northmead, Lusaka", address: "Shop 26 Blessings Mall, Northmead, Lusaka", name: "ACUITAS ASSOCIATES", phone: "0977 457060", whatsapp: "260977457060", email: "info@acuitas.com", website: "https://www.acuitas.com", mapUrl: "https://maps.google.com/?q=ACUITAS+ASSOCIATES,+Shop+26+Blessings+Mall,+Northmead,+Lusaka", featuredImage: "https://picsum.photos/id/50/500/300" },
+      { id: "acc6", category: "Accounting & Finance", milestone: "Kaizen House, Off Great East Road, Lusaka", address: "Kaizen House, Off Great East Road, Handsworth Park, Lusaka", name: "AHAVA CHARTERED ACCOUNTANTS", phone: "0977 721891", whatsapp: "260977721891", email: "info@ahava.com", website: "https://www.ahava.com", mapUrl: "https://maps.google.com/?q=AHAVA+CHARTERED+ACCOUNTANTS,+Kaizen+House,+Off+Great+East+Road,+Handsworth+Park,+Lusaka", featuredImage: "https://picsum.photos/id/60/500/300" },
+      { id: "acc7", category: "Accounting & Finance", milestone: "Plot 12436 Lusaka West, Lusaka", address: "Plot 12436 Lusaka West, Lusaka", name: "ALAN STRATFORD & ASSOCIATES", phone: "0211 281855", whatsapp: "260211281855", email: "info@alanstratford.com", website: "https://www.alanstratford.com", mapUrl: "https://maps.google.com/?q=ALAN+STRATFORD+%26+ASSOCIATES,+Plot+12436+Lusaka+West,+Lusaka", featuredImage: "https://picsum.photos/id/70/500/300" },
+      { id: "acc8", category: "Accounting & Finance", milestone: "Plot 30605 Great East Road, Mass Media, Lusaka", address: "Plot 30605 Great East Road, Mass Media, Lusaka", name: "ALPHA ACCOUNTING & CONSULTANCY SERVICES", phone: "0977 740112", whatsapp: "260977740112", email: "info@alphaaccounting.com", website: "https://www.alphaaccounting.com", mapUrl: "https://maps.google.com/?q=ALPHA+ACCOUNTING+%26+CONSULTANCY+SERVICES,+Plot+30605+Great+East+Road,+Mass+Media,+Lusaka", featuredImage: "https://picsum.photos/id/80/500/300" },
+      { id: "acc9", category: "Accounting & Finance", milestone: "Stand 6953 Lusaka", address: "Stand 6953 Lusaka", name: "ALPHABET CHARTERED ACCOUNTANTS", phone: "0977 782810", whatsapp: "260977782810", email: "info@alphabet.com", website: "https://www.alphabet.com", mapUrl: "https://maps.google.com/?q=ALPHABET+CHARTERED+ACCOUNTANTS,+Stand+6953+Lusaka", featuredImage: "https://picsum.photos/id/90/500/300" },
+      { id: "acc10", category: "Accounting & Finance", milestone: "Plot 24/25 Enock Kavu Road, Industrial Area, Kitwe", address: "Plot 24/25 Enock Kavu Road, Industrial Area, Kitwe", name: "AM&A CHARTERED ACCOUNTANTS", phone: "0212 210928", whatsapp: "260212210928", email: "info@ama.com", website: "https://www.ama.com", mapUrl: "https://maps.google.com/?q=AM%26A+CHARTERED+ACCOUNTANTS,+Plot+24%2F25+Enock+Kavu+Road,+Industrial+Area,+Kitwe", featuredImage: "https://picsum.photos/id/100/500/300" },
+      { id: "acc11", category: "Accounting & Finance", milestone: "Plot 3 Bright Close, Roma, Lusaka", address: "Plot 3 Bright Close, Roma, Lusaka", name: "AMO & ASSOCIATES", phone: "0977 824361", whatsapp: "260977824361", email: "info@amoassociates.com", website: "https://www.amoassociates.com", mapUrl: "https://maps.google.com/?q=AMO+%26+ASSOCIATES,+Plot+3+Bright+Close,+Roma,+Lusaka", featuredImage: "https://picsum.photos/id/11/500/300" },
+      { id: "acc12", category: "Accounting & Finance", milestone: "Suite 1 Block A, Sunshare Tower, Lusaka", address: "Suite 1 Block A, Sunshare Tower, Katima Mulilo Road, Lusaka", name: "AMPS & CO CHARTERED ACCOUNTANTS", phone: "0966 764422", whatsapp: "260966764422", email: "info@ampsco.com", website: "https://www.ampsco.com", mapUrl: "https://maps.google.com/?q=AMPS+%26+CO+CHARTERED+ACCOUNTANTS,+Suite+1+Block+A,+Sunshare+Tower,+Katima+Mulilo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/12/500/300" },
+      { id: "acc13", category: "Accounting & Finance", milestone: "Plot 1056 Kwacha Road, Fairview, Lusaka", address: "Plot 1056 Kwacha Road, Fairview, Lusaka", name: "ARTHUR & ASSOCIATES", phone: "0977 773641", whatsapp: "260977773641", email: "info@arthurassoc.com", website: "https://www.arthurassoc.com", mapUrl: "https://maps.google.com/?q=ARTHUR+%26+ASSOCIATES,+Plot+1056+Kwacha+Road,+Fairview,+Lusaka", featuredImage: "https://picsum.photos/id/13/500/300" },
+      { id: "acc14", category: "Accounting & Finance", milestone: "Plot 2056 Luanshya Road, Villa Elizabetha, Lusaka", address: "Plot 2056 Luanshya Road, Villa Elizabetha, Lusaka", name: "ASCEND FINANCIAL CONSULTANTS", phone: "0977 881234", whatsapp: "260977881234", email: "info@ascend.com", website: "https://www.ascend.com", mapUrl: "https://maps.google.com/?q=ASCEND+FINANCIAL+CONSULTANTS,+Plot+2056+Luanshya+Road,+Villa+Elizabetha,+Lusaka", featuredImage: "https://picsum.photos/id/14/500/300" },
+      { id: "acc15", category: "Accounting & Finance", milestone: "2nd Floor, Permanent House, Cairo Road, Lusaka", address: "2nd Floor, Permanent House, Cairo Road, Lusaka", name: "AUDIT & TAX ADVISORY SERVICES", phone: "0211 223344", whatsapp: "260211223344", email: "info@audittax.com", website: "https://www.audittax.com", mapUrl: "https://maps.google.com/?q=AUDIT+%26+TAX+ADVISORY+SERVICES,+2nd+Floor,+Permanent+House,+Cairo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/15/500/300" },
+      { id: "acc16", category: "Accounting & Finance", milestone: "Plot 1204 Katima Mulilo Road, Rhodes Park, Lusaka", address: "Plot 1204 Katima Mulilo Road, Rhodes Park, Lusaka", name: "BDO ZAMBIA", phone: "0211 253396", whatsapp: "260211253396", email: "info@bdo.co.zm", website: "https://www.bdo.co.zm", mapUrl: "https://maps.google.com/?q=BDO+ZAMBIA,+Plot+1204+Katima+Mulilo+Road,+Rhodes+Park,+Lusaka", featuredImage: "https://picsum.photos/id/16/500/300" },
+      { id: "acc17", category: "Accounting & Finance", milestone: "Plot 848 Church Road, Ridgeway, Lusaka", address: "Plot 848 Church Road, Ridgeway, Lusaka", name: "BEACON ACCOUNTING SERVICES", phone: "0977 123456", whatsapp: "260977123456", email: "info@beacon.com", website: "https://www.beacon.com", mapUrl: "https://maps.google.com/?q=BEACON+ACCOUNTING+SERVICES,+Plot+848+Church+Road,+Ridgeway,+Lusaka", featuredImage: "https://picsum.photos/id/17/500/300" },
+      { id: "acc18", category: "Accounting & Finance", milestone: "Shop 12 Oasis Mall, Great East Road, Lusaka", address: "Shop 12 Oasis Mall, Great East Road, Lusaka", name: "BENCHMARK FINANCIAL CONSULTANTS", phone: "0966 998877", whatsapp: "260966998877", email: "info@benchmark.com", website: "https://www.benchmark.com", mapUrl: "https://maps.google.com/?q=BENCHMARK+FINANCIAL+CONSULTANTS,+Shop+12+Oasis+Mall,+Great+East+Road,+Lusaka", featuredImage: "https://picsum.photos/id/18/500/300" },
+      { id: "acc19", category: "Accounting & Finance", milestone: "Suite 4 Woodgate House, Cairo Road, Lusaka", address: "Suite 4 Woodgate House, Cairo Road, Lusaka", name: "BEST AUDIT & TAX SERVICES", phone: "0211 234567", whatsapp: "260211234567", email: "info@bestaudit.com", website: "https://www.bestaudit.com", mapUrl: "https://maps.google.com/?q=BEST+AUDIT+%26+TAX+SERVICES,+Suite+4+Woodgate+House,+Cairo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/19/500/300" },
+      { id: "acc20", category: "Accounting & Finance", milestone: "Plot 4532 Independence Avenue, Kitwe", address: "Plot 4532 Independence Avenue, Kitwe", name: "BLUE CHIP ACCOUNTANTS", phone: "0212 221100", whatsapp: "260212221100", email: "info@bluechip.com", website: "https://www.bluechip.com", mapUrl: "https://maps.google.com/?q=BLUE+CHIP+ACCOUNTANTS,+Plot+4532+Independence+Avenue,+Kitwe", featuredImage: "https://picsum.photos/id/20/500/300" },
+      { id: "acc21", category: "Accounting & Finance", milestone: "Plot 889 Kafue Road, Lusaka", address: "Plot 889 Kafue Road, Lusaka", name: "BRIDGEWAY CONSULTING SERVICES", phone: "0977 334455", whatsapp: "260977334455", email: "info@bridgeway.com", website: "https://www.bridgeway.com", mapUrl: "https://maps.google.com/?q=BRIDGEWAY+CONSULTING+SERVICES,+Plot+889+Kafue+Road,+Lusaka", featuredImage: "https://picsum.photos/id/21/500/300" },
+      { id: "acc22", category: "Accounting & Finance", milestone: "Plot 1012 Addis Ababa Drive, Rhodes Park, Lusaka", address: "Plot 1012 Addis Ababa Drive, Rhodes Park, Lusaka", name: "CAPITAL FINANCIAL ADVISORS", phone: "0211 256789", whatsapp: "260211256789", email: "info@capitaladvisors.com", website: "https://www.capitaladvisors.com", mapUrl: "https://maps.google.com/?q=CAPITAL+FINANCIAL+ADVISORS,+Plot+1012+Addis+Ababa+Drive,+Rhodes+Park,+Lusaka", featuredImage: "https://picsum.photos/id/22/500/300" },
+      { id: "acc23", category: "Accounting & Finance", milestone: "Plot 778 Great North Road, Kabwe", address: "Plot 778 Great North Road, Kabwe", name: "CENTRAL ACCOUNTING FIRM", phone: "0215 223311", whatsapp: "260215223311", email: "info@centralacc.com", website: "https://www.centralacc.com", mapUrl: "https://maps.google.com/?q=CENTRAL+ACCOUNTING+FIRM,+Plot+778+Great+North+Road,+Kabwe", featuredImage: "https://picsum.photos/id/23/500/300" },
+      { id: "acc24", category: "Accounting & Finance", milestone: "1st Floor Zimco House, Cairo Road, Lusaka", address: "1st Floor Zimco House, Cairo Road, Lusaka", name: "CHARTERED AUDIT PARTNERS", phone: "0211 228899", whatsapp: "260211228899", email: "info@auditpartners.com", website: "https://www.auditpartners.com", mapUrl: "https://maps.google.com/?q=CHARTERED+AUDIT+PARTNERS,+1st+Floor+Zimco+House,+Cairo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/24/500/300" },
+      { id: "acc25", category: "Accounting & Finance", milestone: "Plot 3021 Kwacha Road, Kitwe", address: "Plot 3021 Kwacha Road, Kitwe", name: "COPPERBELT ACCOUNTING SERVICES", phone: "0212 234567", whatsapp: "260212234567", email: "info@copperbeltacc.com", website: "https://www.copperbeltacc.com", mapUrl: "https://maps.google.com/?q=COPPERBELT+ACCOUNTING+SERVICES,+Plot+3021+Kwacha+Road,+Kitwe", featuredImage: "https://picsum.photos/id/25/500/300" },
+      { id: "acc26", category: "Accounting & Finance", milestone: "Plot 5011 President Avenue, Ndola", address: "Plot 5011 President Avenue, Ndola", name: "CROWN FINANCIAL SERVICES", phone: "0212 612345", whatsapp: "260212612345", email: "info@crownfinancial.com", website: "https://www.crownfinancial.com", mapUrl: "https://maps.google.com/?q=CROWN+FINANCIAL+SERVICES,+Plot+5011+President+Avenue,+Ndola", featuredImage: "https://picsum.photos/id/26/500/300" },
+      { id: "acc27", category: "Accounting & Finance", milestone: "Plot 1209 Great East Road, Lusaka", address: "Plot 1209 Great East Road, Lusaka", name: "DELOITTE ZAMBIA", phone: "0211 228677", whatsapp: "260211228677", email: "info@deloitte.co.zm", website: "https://www.deloitte.com/zm", mapUrl: "https://maps.google.com/?q=DELOITTE+ZAMBIA,+Plot+1209+Great+East+Road,+Lusaka", featuredImage: "https://picsum.photos/id/27/500/300" },
+      { id: "acc28", category: "Accounting & Finance", milestone: "Plot 4055 Broadway Street, Ndola", address: "Plot 4055 Broadway Street, Ndola", name: "DELTA AUDITORS & CONSULTANTS", phone: "0212 621122", whatsapp: "260212621122", email: "info@deltaaudit.com", website: "https://www.deltaaudit.com", mapUrl: "https://maps.google.com/?q=DELTA+AUDITORS+%26+CONSULTANTS,+Plot+4055+Broadway+Street,+Ndola", featuredImage: "https://picsum.photos/id/28/500/300" },
+      { id: "acc29", category: "Accounting & Finance", milestone: "Plot 1023 Chachacha Road, Lusaka", address: "Plot 1023 Chachacha Road, Lusaka", name: "DYNAMIC FINANCIAL SOLUTIONS", phone: "0977 445566", whatsapp: "260977445566", email: "info@dynamicfinancial.com", website: "https://www.dynamicfinancial.com", mapUrl: "https://maps.google.com/?q=DYNAMIC+FINANCIAL+SOLUTIONS,+Plot+1023+Chachacha+Road,+Lusaka", featuredImage: "https://picsum.photos/id/29/500/300" },
+      { id: "acc30", category: "Accounting & Finance", milestone: "Plot 5543 Great East Road, Lusaka", address: "Plot 5543 Great East Road, Lusaka", name: "EAGLE ACCOUNTING & TAX SERVICES", phone: "0966 112233", whatsapp: "260966112233", email: "info@eagletax.com", website: "https://www.eagletax.com", mapUrl: "https://maps.google.com/?q=EAGLE+ACCOUNTING+%26+TAX+SERVICES,+Plot+5543+Great+East+Road,+Lusaka", featuredImage: "https://picsum.photos/id/30/500/300" },
+      { id: "acc31", category: "Accounting & Finance", milestone: "3rd Floor Finance House, Cairo Road, Lusaka", address: "3rd Floor Finance House, Cairo Road, Lusaka", name: "ELITE FINANCIAL ADVISORS", phone: "0211 231122", whatsapp: "260211231122", email: "info@elitefinancial.com", website: "https://www.elitefinancial.com", mapUrl: "https://maps.google.com/?q=ELITE+FINANCIAL+ADVISORS,+3rd+Floor+Finance+House,+Cairo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/31/500/300" },
+      { id: "acc32", category: "Accounting & Finance", milestone: "Plot 1801 Katima Mulilo Road, Lusaka", address: "Plot 1801 Katima Mulilo Road, Lusaka", name: "EMERALD CHARTERED ACCOUNTANTS", phone: "0977 556677", whatsapp: "260977556677", email: "info@emerald.com", website: "https://www.emerald.com", mapUrl: "https://maps.google.com/?q=EMERALD+CHARTERED+ACCOUNTANTS,+Plot+1801+Katima+Mulilo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/32/500/300" },
+      { id: "acc33", category: "Accounting & Finance", milestone: "Plot 2201 Church Road, Lusaka", address: "Plot 2201 Church Road, Lusaka", name: "EQUITY AUDIT & TAX SERVICES", phone: "0211 251122", whatsapp: "260211251122", email: "info@equitytax.com", website: "https://www.equitytax.com", mapUrl: "https://maps.google.com/?q=EQUITY+AUDIT+%26+TAX+SERVICES,+Plot+2201+Church+Road,+Lusaka", featuredImage: "https://picsum.photos/id/33/500/300" },
+      { id: "acc34", category: "Accounting & Finance", milestone: "Plot 990 Katima Mulilo Road, Rhodes Park, Lusaka", address: "Plot 990 Katima Mulilo Road, Rhodes Park, Lusaka", name: "EY ZAMBIA (ERNST & YOUNG)", phone: "0211 378200", whatsapp: "260211378200", email: "info@ey.co.zm", website: "https://www.ey.com/zm", mapUrl: "https://maps.google.com/?q=EY+ZAMBIA+(ERNST+%26+YOUNG),+Plot+990+Katima+Mulilo+Road,+Rhodes+Park,+Lusaka", featuredImage: "https://picsum.photos/id/34/500/300" },
+      { id: "acc35", category: "Accounting & Finance", milestone: "Plot 3055 Lumumba Road, Lusaka", address: "Plot 3055 Lumumba Road, Lusaka", name: "EXCEL ACCOUNTING CONSULTANTS", phone: "0966 334455", whatsapp: "260966334455", email: "info@excelacc.com", website: "https://www.excelacc.com", mapUrl: "https://maps.google.com/?q=EXCEL+ACCOUNTING+CONSULTANTS,+Plot+3055+Lumumba+Road,+Lusaka", featuredImage: "https://picsum.photos/id/35/500/300" },
+      { id: "acc36", category: "Accounting & Finance", milestone: "Plot 1204 Freedom Way, Lusaka", address: "Plot 1204 Freedom Way, Lusaka", name: "EXECUTIVE AUDIT FIRM", phone: "0211 229988", whatsapp: "260211229988", email: "info@executiveaudit.com", website: "https://www.executiveaudit.com", mapUrl: "https://maps.google.com/?q=EXECUTIVE+AUDIT+FIRM,+Plot+1204+Freedom+Way,+Lusaka", featuredImage: "https://picsum.photos/id/36/500/300" },
+      { id: "acc37", category: "Accounting & Finance", milestone: "Plot 890 Cairo Road, Lusaka", address: "Plot 890 Cairo Road, Lusaka", name: "FIRST FINANCIAL CONSULTANTS", phone: "0977 667788", whatsapp: "260977667788", email: "info@firstfinancial.com", website: "https://www.firstfinancial.com", mapUrl: "https://maps.google.com/?q=FIRST+FINANCIAL+CONSULTANTS,+Plot+890+Cairo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/37/500/300" },
+      { id: "acc38", category: "Accounting & Finance", milestone: "Plot 1402 Great East Road, Lusaka", address: "Plot 1402 Great East Road, Lusaka", name: "FOCUS ACCOUNTING SERVICES", phone: "0211 291122", whatsapp: "260211291122", email: "info@focusacc.com", website: "https://www.focusacc.com", mapUrl: "https://maps.google.com/?q=FOCUS+ACCOUNTING+SERVICES,+Plot+1402+Great+East+Road,+Lusaka", featuredImage: "https://picsum.photos/id/38/500/300" },
+      { id: "acc39", category: "Accounting & Finance", milestone: "Plot 3021 Independence Avenue, Livingstone", address: "Plot 3021 Independence Avenue, Livingstone", name: "FRONTIER AUDIT PARTNERS", phone: "0213 321122", whatsapp: "260213321122", email: "info@frontieraudit.com", website: "https://www.frontieraudit.com", mapUrl: "https://maps.google.com/?q=FRONTIER+AUDIT+PARTNERS,+Plot+3021+Independence+Avenue,+Livingstone", featuredImage: "https://picsum.photos/id/39/500/300" },
+      { id: "acc40", category: "Accounting & Finance", milestone: "Plot 2204 Independence Avenue, Lusaka", address: "Plot 2204 Independence Avenue, Lusaka", name: "GATEWAY FINANCIAL ADVISORS", phone: "0966 445566", whatsapp: "260966445566", email: "info@gatewayfinancial.com", website: "https://www.gatewayfinancial.com", mapUrl: "https://maps.google.com/?q=GATEWAY+FINANCIAL+ADVISORS,+Plot+2204+Independence+Avenue,+Lusaka", featuredImage: "https://picsum.photos/id/40/500/300" },
+      { id: "acc41", category: "Accounting & Finance", milestone: "Plot 5012 Great East Road, Lusaka", address: "Plot 5012 Great East Road, Lusaka", name: "GLOBAL AUDIT SERVICES", phone: "0211 293344", whatsapp: "260211293344", email: "info@globalaudit.com", website: "https://www.globalaudit.com", mapUrl: "https://maps.google.com/?q=GLOBAL+AUDIT+SERVICES,+Plot+5012+Great+East+Road,+Lusaka", featuredImage: "https://picsum.photos/id/41/500/300" },
+      { id: "acc42", category: "Accounting & Finance", milestone: "Plot 1102 Addis Ababa Drive, Lusaka", address: "Plot 1102 Addis Ababa Drive, Lusaka", name: "GRANT THORNTON ZAMBIA", phone: "0211 227722", whatsapp: "260211227722", email: "info@gt.co.zm", website: "https://www.grantthornton.co.zm", mapUrl: "https://maps.google.com/?q=GRANT+THORNTON+ZAMBIA,+Plot+1102+Addis+Ababa+Drive,+Lusaka", featuredImage: "https://picsum.photos/id/42/500/300" },
+      { id: "acc43", category: "Accounting & Finance", milestone: "Plot 8812 Kafue Road, Lusaka", address: "Plot 8812 Kafue Road, Lusaka", name: "HARMONY FINANCIAL CONSULTANTS", phone: "0977 889900", whatsapp: "260977889900", email: "info@harmonyfinancial.com", website: "https://www.harmonyfinancial.com", mapUrl: "https://maps.google.com/?q=HARMONY+FINANCIAL+CONSULTANTS,+Plot+8812+Kafue+Road,+Lusaka", featuredImage: "https://picsum.photos/id/43/500/300" },
+      { id: "acc44", category: "Accounting & Finance", milestone: "Plot 4022 President Avenue, Ndola", address: "Plot 4022 President Avenue, Ndola", name: "HERITAGE ACCOUNTING FIRM", phone: "0212 615566", whatsapp: "260212615566", email: "info@heritageacc.com", website: "https://www.heritageacc.com", mapUrl: "https://maps.google.com/?q=HERITAGE+ACCOUNTING+FIRM,+Plot+4022+President+Avenue,+Ndola", featuredImage: "https://picsum.photos/id/44/500/300" },
+      { id: "acc45", category: "Accounting & Finance", milestone: "Plot 1201 Rhodes Park, Lusaka", address: "Plot 1201 Rhodes Park, Lusaka", name: "HIGHLAND AUDITORS", phone: "0211 254433", whatsapp: "260211254433", email: "info@highlandaudit.com", website: "https://www.highlandaudit.com", mapUrl: "https://maps.google.com/?q=HIGHLAND+AUDITORS,+Plot+1201+Rhodes+Park,+Lusaka", featuredImage: "https://picsum.photos/id/45/500/300" },
+      { id: "acc46", category: "Accounting & Finance", milestone: "Plot 3022 Chachacha Road, Lusaka", address: "Plot 3022 Chachacha Road, Lusaka", name: "HORIZON CHARTERED ACCOUNTANTS", phone: "0966 778899", whatsapp: "260966778899", email: "info@horizonacc.com", website: "https://www.horizonacc.com", mapUrl: "https://maps.google.com/?q=HORIZON+CHARTERED+ACCOUNTANTS,+Plot+3022+Chachacha+Road,+Lusaka", featuredImage: "https://picsum.photos/id/46/500/300" },
+      { id: "acc47", category: "Accounting & Finance", milestone: "Plot 1002 Lumumba Road, Lusaka", address: "Plot 1002 Lumumba Road, Lusaka", name: "IMPACT FINANCIAL SERVICES", phone: "0977 112244", whatsapp: "260977112244", email: "info@impactfinancial.com", website: "https://www.impactfinancial.com", mapUrl: "https://maps.google.com/?q=IMPACT+FINANCIAL+SERVICES,+Plot+1002+Lumumba+Road,+Lusaka", featuredImage: "https://picsum.photos/id/47/500/300" },
+      { id: "acc48", category: "Accounting & Finance", milestone: "Plot 5501 Great East Road, Lusaka", address: "Plot 5501 Great East Road, Lusaka", name: "INFINITY ACCOUNTING CONSULTANTS", phone: "0211 295566", whatsapp: "260211295566", email: "info@infinityacc.com", website: "https://www.infinityacc.com", mapUrl: "https://maps.google.com/?q=INFINITY+ACCOUNTING+CONSULTANTS,+Plot+5501+Great+East+Road,+Lusaka", featuredImage: "https://picsum.photos/id/48/500/300" },
+      { id: "acc49", category: "Accounting & Finance", milestone: "Plot 2022 Katima Mulilo Road, Lusaka", address: "Plot 2022 Katima Mulilo Road, Lusaka", name: "INTEGRITY AUDITORS", phone: "0966 223344", whatsapp: "260966223344", email: "info@integrityaudit.com", website: "https://www.integrityaudit.com", mapUrl: "https://maps.google.com/?q=INTEGRITY+AUDITORS,+Plot+2022+Katima+Mulilo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/49/500/300" },
+      { id: "acc50", category: "Accounting & Finance", milestone: "Plot 8011 Cairo Road, Lusaka", address: "Plot 8011 Cairo Road, Lusaka", name: "KPMG ZAMBIA", phone: "0211 372900", whatsapp: "260211372900", email: "info@kpmg.co.zm", website: "https://www.kpmg.com/zm", mapUrl: "https://maps.google.com/?q=KPMG+ZAMBIA,+Plot+8011+Cairo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/50/500/300" },
+      { id: "acc51", category: "Accounting & Finance", milestone: "Plot 1005 Great East Road, Lusaka", address: "Plot 1005 Great East Road, Lusaka", name: "LANDMARK FINANCIAL SERVICES", phone: "0977 223355", whatsapp: "260977223355", email: "info@landmarkfinancial.com", website: "https://www.landmarkfinancial.com", mapUrl: "https://maps.google.com/?q=LANDMARK+FINANCIAL+SERVICES,+Plot+1005+Great+East+Road,+Lusaka", featuredImage: "https://picsum.photos/id/51/500/300" },
+      { id: "acc52", category: "Accounting & Finance", milestone: "Plot 3022 Freedom Way, Lusaka", address: "Plot 3022 Freedom Way, Lusaka", name: "LEADERSHIP ACCOUNTING CONSULTANTS", phone: "0211 224455", whatsapp: "260211224455", email: "info@leadershipacc.com", website: "https://www.leadershipacc.com", mapUrl: "https://maps.google.com/?q=LEADERSHIP+ACCOUNTING+CONSULTANTS,+Plot+3022+Freedom+Way,+Lusaka", featuredImage: "https://picsum.photos/id/52/500/300" },
+      { id: "acc53", category: "Accounting & Finance", milestone: "Plot 4012 Broadway Street, Ndola", address: "Plot 4012 Broadway Street, Ndola", name: "LEGACY AUDIT FIRM", phone: "0212 618899", whatsapp: "260212618899", email: "info@legacyaudit.com", website: "https://www.legacyaudit.com", mapUrl: "https://maps.google.com/?q=LEGACY+AUDIT+FIRM,+Plot+4012+Broadway+Street,+Ndola", featuredImage: "https://picsum.photos/id/53/500/300" },
+      { id: "acc54", category: "Accounting & Finance", milestone: "Plot 1205 Kafue Road, Lusaka", address: "Plot 1205 Kafue Road, Lusaka", name: "LIBERTY FINANCIAL ADVISORS", phone: "0966 556677", whatsapp: "260966556677", email: "info@libertyfinancial.com", website: "https://www.libertyfinancial.com", mapUrl: "https://maps.google.com/?q=LIBERTY+FINANCIAL+ADVISORS,+Plot+1205+Kafue+Road,+Lusaka", featuredImage: "https://picsum.photos/id/54/500/300" },
+      { id: "acc55", category: "Accounting & Finance", milestone: "Plot 2202 Rhodes Park, Lusaka", address: "Plot 2202 Rhodes Park, Lusaka", name: "LUMINA ACCOUNTING SERVICES", phone: "0211 258899", whatsapp: "260211258899", email: "info@luminaacc.com", website: "https://www.luminaacc.com", mapUrl: "https://maps.google.com/?q=LUMINA+ACCOUNTING+SERVICES,+Plot+2202+Rhodes+Park,+Lusaka", featuredImage: "https://picsum.photos/id/55/500/300" },
+      { id: "acc56", category: "Accounting & Finance", milestone: "Plot 880 Katima Mulilo Road, Lusaka", address: "Plot 880 Katima Mulilo Road, Lusaka", name: "MATRIX AUDITORS & CONSULTANTS", phone: "0977 335577", whatsapp: "260977335577", email: "info@matrixaudit.com", website: "https://www.matrixaudit.com", mapUrl: "https://maps.google.com/?q=MATRIX+AUDITORS+%26+CONSULTANTS,+Plot+880+Katima+Mulilo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/56/500/300" },
+      { id: "acc57", category: "Accounting & Finance", milestone: "Plot 1002 Katima Mulilo Road, Rhodes Park, Lusaka", address: "Plot 1002 Katima Mulilo Road, Rhodes Park, Lusaka", name: "MAZARS ZAMBIA", phone: "0211 257788", whatsapp: "260211257788", email: "info@mazars.co.zm", website: "https://www.mazars.zm", mapUrl: "https://maps.google.com/?q=MAZARS+ZAMBIA,+Plot+1002+Katima+Mulilo+Road,+Rhodes+Park,+Lusaka", featuredImage: "https://picsum.photos/id/57/500/300" },
+      { id: "acc58", category: "Accounting & Finance", milestone: "Plot 3012 Kwacha Road, Kitwe", address: "Plot 3012 Kwacha Road, Kitwe", name: "MERIDIAN FINANCIAL CONSULTANTS", phone: "0212 225566", whatsapp: "260212225566", email: "info@meridianfinancial.com", website: "https://www.meridianfinancial.com", mapUrl: "https://maps.google.com/?q=MERIDIAN+FINANCIAL+CONSULTANTS,+Plot+3012+Kwacha+Road,+Kitwe", featuredImage: "https://picsum.photos/id/58/500/300" },
+      { id: "acc59", category: "Accounting & Finance", milestone: "Plot 2201 Cairo Road, Lusaka", address: "Plot 2201 Cairo Road, Lusaka", name: "METRO ACCOUNTING SERVICES", phone: "0966 889900", whatsapp: "260966889900", email: "info@metroacc.com", website: "https://www.metroacc.com", mapUrl: "https://maps.google.com/?q=METRO+ACCOUNTING+SERVICES,+Plot+2201+Cairo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/59/500/300" },
+      { id: "acc60", category: "Accounting & Finance", milestone: "Plot 4011 Great East Road, Lusaka", address: "Plot 4011 Great East Road, Lusaka", name: "MILESTONE AUDITORS", phone: "0211 294455", whatsapp: "260211294455", email: "info@milestoneaudit.com", website: "https://www.milestoneaudit.com", mapUrl: "https://maps.google.com/?q=MILESTONE+AUDITORS,+Plot+4011+Great+East+Road,+Lusaka", featuredImage: "https://picsum.photos/id/60/500/300" },
+      { id: "acc61", category: "Accounting & Finance", milestone: "Plot 1209 Independence Avenue, Livingstone", address: "Plot 1209 Independence Avenue, Livingstone", name: "MOSI-OA-TUNYA ACCOUNTING FIRM", phone: "0213 325566", whatsapp: "260213325566", email: "info@mosiacc.com", website: "https://www.mosiacc.com", mapUrl: "https://maps.google.com/?q=MOSI-OA-TUNYA+ACCOUNTING+FIRM,+Plot+1209+Independence+Avenue,+Livingstone", featuredImage: "https://picsum.photos/id/61/500/300" },
+      { id: "acc62", category: "Accounting & Finance", milestone: "Plot 5012 Freedom Way, Lusaka", address: "Plot 5012 Freedom Way, Lusaka", name: "NEXIA ZAMBIA", phone: "0211 226677", whatsapp: "260211226677", email: "info@nexia.co.zm", website: "https://www.nexia.co.zm", mapUrl: "https://maps.google.com/?q=NEXIA+ZAMBIA,+Plot+5012+Freedom+Way,+Lusaka", featuredImage: "https://picsum.photos/id/62/500/300" },
+      { id: "acc63", category: "Accounting & Finance", milestone: "Plot 880 Church Road, Lusaka", address: "Plot 880 Church Road, Lusaka", name: "NOVA FINANCIAL ADVISORS", phone: "0977 446688", whatsapp: "260977446688", email: "info@novafinancial.com", website: "https://www.novafinancial.com", mapUrl: "https://maps.google.com/?q=NOVA+FINANCIAL+ADVISORS,+Plot+880+Church+Road,+Lusaka", featuredImage: "https://picsum.photos/id/63/500/300" },
+      { id: "acc64", category: "Accounting & Finance", milestone: "Plot 3011 Lumumba Road, Lusaka", address: "Plot 3011 Lumumba Road, Lusaka", name: "OAKWOOD ACCOUNTING SERVICES", phone: "0966 113355", whatsapp: "260966113355", email: "info@oakwoodacc.com", website: "https://www.oakwoodacc.com", mapUrl: "https://maps.google.com/?q=OAKWOOD+ACCOUNTING+SERVICES,+Plot+3011+Lumumba+Road,+Lusaka", featuredImage: "https://picsum.photos/id/64/500/300" },
+      { id: "acc65", category: "Accounting & Finance", milestone: "Plot 1202 Rhodes Park, Lusaka", address: "Plot 1202 Rhodes Park, Lusaka", name: "OMEGA AUDITORS", phone: "0211 251133", whatsapp: "260211251133", email: "info@omegaaudit.com", website: "https://www.omegaaudit.com", mapUrl: "https://maps.google.com/?q=OMEGA+AUDITORS,+Plot+1202+Rhodes+Park,+Lusaka", featuredImage: "https://picsum.photos/id/65/500/300" },
+      { id: "acc66", category: "Accounting & Finance", milestone: "Plot 2205 Katima Mulilo Road, Lusaka", address: "Plot 2205 Katima Mulilo Road, Lusaka", name: "OPTIMIMA FINANCIAL SOLUTIONS", phone: "0977 778899", whatsapp: "260977778899", email: "info@optimafinancial.com", website: "https://www.optimafinancial.com", mapUrl: "https://maps.google.com/?q=OPTIMIMA+FINANCIAL+SOLUTIONS,+Plot+2205+Katima+Mulilo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/66/500/300" },
+      { id: "acc67", category: "Accounting & Finance", milestone: "Plot 4012 President Avenue, Ndola", address: "Plot 4012 President Avenue, Ndola", name: "PACIFIC ACCOUNTING CONSULTANTS", phone: "0212 612233", whatsapp: "260212612233", email: "info@pacificacc.com", website: "https://www.pacificacc.com", mapUrl: "https://maps.google.com/?q=PACIFIC+ACCOUNTING+CONSULTANTS,+Plot+4012+President+Avenue,+Ndola", featuredImage: "https://picsum.photos/id/67/500/300" },
+      { id: "acc68", category: "Accounting & Finance", milestone: "Plot 1001 Great East Road, Lusaka", address: "Plot 1001 Great East Road, Lusaka", name: "PARAMOUNT AUDIT FIRM", phone: "0211 292233", whatsapp: "260211292233", email: "info@paramountaudit.com", website: "https://www.paramountaudit.com", mapUrl: "https://maps.google.com/?q=PARAMOUNT+AUDIT+FIRM,+Plot+1001+Great+East+Road,+Lusaka", featuredImage: "https://picsum.photos/id/68/500/300" },
+      { id: "acc69", category: "Accounting & Finance", milestone: "Plot 8821 Cairo Road, Lusaka", address: "Plot 8821 Cairo Road, Lusaka", name: "PEAK FINANCIAL ADVISORS", phone: "0966 335577", whatsapp: "260966335577", email: "info@peakfinancial.com", website: "https://www.peakfinancial.com", mapUrl: "https://maps.google.com/?q=PEAK+FINANCIAL+ADVISORS,+Plot+8821+Cairo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/69/500/300" },
+      { id: "acc70", category: "Accounting & Finance", milestone: "Plot 3012 Chachacha Road, Lusaka", address: "Plot 3012 Chachacha Road, Lusaka", name: "PINNACLE CHARTERED ACCOUNTANTS", phone: "0977 557799", whatsapp: "260977557799", email: "info@pinnacleacc.com", website: "https://www.pinnacleacc.com", mapUrl: "https://maps.google.com/?q=PINNACLE+CHARTERED+ACCOUNTANTS,+Plot+3012+Chachacha+Road,+Lusaka", featuredImage: "https://picsum.photos/id/70/500/300" },
+      { id: "acc71", category: "Accounting & Finance", milestone: "Plot 2001 Great East Road, Lusaka", address: "Plot 2001 Great East Road, Lusaka", name: "PKF ZAMBIA", phone: "0211 291133", whatsapp: "260211291133", email: "info@pkf.co.zm", website: "https://www.pkf.co.zm", mapUrl: "https://maps.google.com/?q=PKF+ZAMBIA,+Plot+2001+Great+East+Road,+Lusaka", featuredImage: "https://picsum.photos/id/71/500/300" },
+      { id: "acc72", category: "Accounting & Finance", milestone: "Plot 1205 Rhodes Park, Lusaka", address: "Plot 1205 Rhodes Park, Lusaka", name: "PREMIER AUDIT SERVICES", phone: "0211 253344", whatsapp: "260211253344", email: "info@premieraudit.com", website: "https://www.premieraudit.com", mapUrl: "https://maps.google.com/?q=PREMIER+AUDIT+SERVICES,+Plot+1205+Rhodes+Park,+Lusaka", featuredImage: "https://picsum.photos/id/72/500/300" },
+      { id: "acc73", category: "Accounting & Finance", milestone: "PwC Office Park, Thabo Mbeki Road, Lusaka", address: "PwC Office Park, Thabo Mbeki Road, Lusaka", name: "PWC ZAMBIA (PRICEWATERHOUSECOOPERS)", phone: "0211 334000", whatsapp: "260211334000", email: "info@pwc.co.zm", website: "https://www.pwc.com/zm", mapUrl: "https://maps.google.com/?q=PWC+ZAMBIA+(PRICEWATERHOUSECOOPERS),+PwC+Office+Park,+Thabo+Mbeki+Road,+Lusaka", featuredImage: "https://picsum.photos/id/73/500/300" },
+      { id: "acc74", category: "Accounting & Finance", milestone: "Plot 3011 Kwacha Road, Kitwe", address: "Plot 3011 Kwacha Road, Kitwe", name: "QUANTUM FINANCIAL CONSULTANTS", phone: "0212 228899", whatsapp: "260212228899", email: "info@quantumfinancial.com", website: "https://www.quantumfinancial.com", mapUrl: "https://maps.google.com/?q=QUANTUM+FINANCIAL+CONSULTANTS,+Plot+3011+Kwacha+Road,+Kitwe", featuredImage: "https://picsum.photos/id/74/500/300" },
+      { id: "acc75", category: "Accounting & Finance", milestone: "Plot 5012 Cairo Road, Lusaka", address: "Plot 5012 Cairo Road, Lusaka", name: "RADICAL ACCOUNTING FIRM", phone: "0966 447799", whatsapp: "260966447799", email: "info@radicalacc.com", website: "https://www.radicalacc.com", mapUrl: "https://maps.google.com/?q=RADICAL+ACCOUNTING+FIRM,+Plot+5012+Cairo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/75/500/300" },
+      { id: "acc76", category: "Accounting & Finance", milestone: "Plot 1201 Church Road, Lusaka", address: "Plot 1201 Church Road, Lusaka", name: "RELIANCE AUDITORS", phone: "0211 252233", whatsapp: "260211252233", email: "info@relianceaudit.com", website: "https://www.relianceaudit.com", mapUrl: "https://maps.google.com/?q=RELIANCE+AUDITORS,+Plot+1201+Church+Road,+Lusaka", featuredImage: "https://picsum.photos/id/76/500/300" },
+      { id: "acc77", category: "Accounting & Finance", milestone: "Plot 3011 Katima Mulilo Road, Rhodes Park, Lusaka", address: "Plot 3011 Katima Mulilo Road, Rhodes Park, Lusaka", name: "RSM ZAMBIA", phone: "0211 254455", whatsapp: "260211254455", email: "info@rsm.co.zm", website: "https://www.rsm.global/zambia", mapUrl: "https://maps.google.com/?q=RSM+ZAMBIA,+Plot+3011+Katima+Mulilo+Road,+Rhodes+Park,+Lusaka", featuredImage: "https://picsum.photos/id/77/500/300" },
+      { id: "acc78", category: "Accounting & Finance", milestone: "Plot 880 Freedom Way, Lusaka", address: "Plot 880 Freedom Way, Lusaka", name: "SIGMA FINANCIAL CONSULTANTS", phone: "0977 114477", whatsapp: "260977114477", email: "info@sigmafinancial.com", website: "https://www.sigmafinancial.com", mapUrl: "https://maps.google.com/?q=SIGMA+FINANCIAL+CONSULTANTS,+Plot+880+Freedom+Way,+Lusaka", featuredImage: "https://picsum.photos/id/78/500/300" },
+      { id: "acc79", category: "Accounting & Finance", milestone: "Plot 2204 Lumumba Road, Lusaka", address: "Plot 2204 Lumumba Road, Lusaka", name: "SILVERLINE ACCOUNTING SERVICES", phone: "0966 225588", whatsapp: "260966225588", email: "info@silverlineacc.com", website: "https://www.silverlineacc.com", mapUrl: "https://maps.google.com/?q=SILVERLINE+ACCOUNTING+SERVICES,+Plot+2204+Lumumba+Road,+Lusaka", featuredImage: "https://picsum.photos/id/79/500/300" },
+      { id: "acc80", category: "Accounting & Finance", milestone: "Plot 4012 Broadway Street, Ndola", address: "Plot 4012 Broadway Street, Ndola", name: "SPECTRUM AUDIT FIRM", phone: "0212 613344", whatsapp: "260212613344", email: "info@spectrumaudit.com", website: "https://www.spectrumaudit.com", mapUrl: "https://maps.google.com/?q=SPECTRUM+AUDIT+FIRM,+Plot+4012+Broadway+Street,+Ndola", featuredImage: "https://picsum.photos/id/80/500/300" },
+      { id: "acc81", category: "Accounting & Finance", milestone: "Plot 1002 Great East Road, Lusaka", address: "Plot 1002 Great East Road, Lusaka", name: "SUMMIT FINANCIAL ADVISORS", phone: "0211 293355", whatsapp: "260211293355", email: "info@summitfinancial.com", website: "https://www.summitfinancial.com", mapUrl: "https://maps.google.com/?q=SUMMIT+FINANCIAL+ADVISORS,+Plot+1002+Great+East+Road,+Lusaka", featuredImage: "https://picsum.photos/id/81/500/300" },
+      { id: "acc82", category: "Accounting & Finance", milestone: "Plot 3011 Cairo Road, Lusaka", address: "Plot 3011 Cairo Road, Lusaka", name: "SUPREME CHARTERED ACCOUNTANTS", phone: "0977 881122", whatsapp: "260977881122", email: "info@supremeacc.com", website: "https://www.supremeacc.com", mapUrl: "https://maps.google.com/?q=SUPREME+CHARTERED+ACCOUNTANTS,+Plot+3011+Cairo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/82/500/300" },
+      { id: "acc83", category: "Accounting & Finance", milestone: "Plot 2201 Rhodes Park, Lusaka", address: "Plot 2201 Rhodes Park, Lusaka", name: "TAX & AUDIT CONSULT ZAMBIA", phone: "0211 256677", whatsapp: "260211256677", email: "info@taxauditconsult.com", website: "https://www.taxauditconsult.com", mapUrl: "https://maps.google.com/?q=TAX+%26+AUDIT+CONSULT+ZAMBIA,+Plot+2201+Rhodes+Park,+Lusaka", featuredImage: "https://picsum.photos/id/83/500/300" },
+      { id: "acc84", category: "Accounting & Finance", milestone: "Plot 880 Katima Mulilo Road, Lusaka", address: "Plot 880 Katima Mulilo Road, Lusaka", name: "TRIANGLE FINANCIAL SERVICES", phone: "0966 991122", whatsapp: "260966991122", email: "info@trianglefinancial.com", website: "https://www.trianglefinancial.com", mapUrl: "https://maps.google.com/?q=TRIANGLE+FINANCIAL+SERVICES,+Plot+880+Katima+Mulilo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/84/500/300" },
+      { id: "acc85", category: "Accounting & Finance", milestone: "Plot 4011 Independence Avenue, Kitwe", address: "Plot 4011 Independence Avenue, Kitwe", name: "TRINITY AUDITORS", phone: "0212 223344", whatsapp: "260212223344", email: "info@trinityaudit.com", website: "https://www.trinityaudit.com", mapUrl: "https://maps.google.com/?q=TRINITY+AUDITORS,+Plot+4011+Independence+Avenue,+Kitwe", featuredImage: "https://picsum.photos/id/85/500/300" },
+      { id: "acc86", category: "Accounting & Finance", milestone: "Plot 1001 Freedom Way, Lusaka", address: "Plot 1001 Freedom Way, Lusaka", name: "TRUSTED FINANCIAL CONSULTANTS", phone: "0977 225588", whatsapp: "260977225588", email: "info@trustedfinancial.com", website: "https://www.trustedfinancial.com", mapUrl: "https://maps.google.com/?q=TRUSTED+FINANCIAL+CONSULTANTS,+Plot+1001+Freedom+Way,+Lusaka", featuredImage: "https://picsum.photos/id/86/500/300" },
+      { id: "acc87", category: "Accounting & Finance", milestone: "Plot 3022 Great East Road, Lusaka", address: "Plot 3022 Great East Road, Lusaka", name: "ULTIMATE ACCOUNTING SERVICES", phone: "0211 291144", whatsapp: "260211291144", email: "info@ultimateacc.com", website: "https://www.ultimateacc.com", mapUrl: "https://maps.google.com/?q=ULTIMATE+ACCOUNTING+SERVICES,+Plot+3022+Great+East+Road,+Lusaka", featuredImage: "https://picsum.photos/id/87/500/300" },
+      { id: "acc88", category: "Accounting & Finance", milestone: "Plot 1202 Lumumba Road, Lusaka", address: "Plot 1202 Lumumba Road, Lusaka", name: "UNIFIED AUDIT FIRM", phone: "0966 336699", whatsapp: "260966336699", email: "info@unifiedaudit.com", website: "https://www.unifiedaudit.com", mapUrl: "https://maps.google.com/?q=UNIFIED+AUDIT+FIRM,+Plot+1202+Lumumba+Road,+Lusaka", featuredImage: "https://picsum.photos/id/88/500/300" },
+      { id: "acc89", category: "Accounting & Finance", milestone: "Plot 2201 Church Road, Lusaka", address: "Plot 2201 Church Road, Lusaka", name: "VALOR FINANCIAL ADVISORS", phone: "0977 448800", whatsapp: "260977448800", email: "info@valorfinancial.com", website: "https://www.valorfinancial.com", mapUrl: "https://maps.google.com/?q=VALOR+FINANCIAL+ADVISORS,+Plot+2201+Church+Road,+Lusaka", featuredImage: "https://picsum.photos/id/89/500/300" },
+      { id: "acc90", category: "Accounting & Finance", milestone: "Plot 880 Rhodes Park, Lusaka", address: "Plot 880 Rhodes Park, Lusaka", name: "VECTOR CHARTERED ACCOUNTANTS", phone: "0211 257799", whatsapp: "260211257799", email: "info@vectoracc.com", website: "https://www.vectoracc.com", mapUrl: "https://maps.google.com/?q=VECTOR+CHARTERED+ACCOUNTANTS,+Plot+880+Rhodes+Park,+Lusaka", featuredImage: "https://picsum.photos/id/90/500/300" },
+      { id: "acc91", category: "Accounting & Finance", milestone: "Plot 5011 Katima Mulilo Road, Lusaka", address: "Plot 5011 Katima Mulilo Road, Lusaka", name: "VERITAS AUDITORS & CONSULTANTS", phone: "0966 114477", whatsapp: "260966114477", email: "info@veritasaudit.com", website: "https://www.veritasaudit.com", mapUrl: "https://maps.google.com/?q=VERITAS+AUDITORS+%26+CONSULTANTS,+Plot+5011+Katima+Mulilo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/91/500/300" },
+      { id: "acc92", category: "Accounting & Finance", milestone: "Plot 1002 Cairo Road, Lusaka", address: "Plot 1002 Cairo Road, Lusaka", name: "VICTORY FINANCIAL SERVICES", phone: "0977 336699", whatsapp: "260977336699", email: "info@victoryfinancial.com", website: "https://www.victoryfinancial.com", mapUrl: "https://maps.google.com/?q=VICTORY+FINANCIAL+SERVICES,+Plot+1002+Cairo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/92/500/300" },
+      { id: "acc93", category: "Accounting & Finance", milestone: "Plot 3012 Freedom Way, Lusaka", address: "Plot 3012 Freedom Way, Lusaka", name: "VISION ACCOUNTING CONSULTANTS", phone: "0211 223355", whatsapp: "260211223355", email: "info@visionacc.com", website: "https://www.visionacc.com", mapUrl: "https://maps.google.com/?q=VISION+ACCOUNTING+CONSULTANTS,+Plot+3012+Freedom+Way,+Lusaka", featuredImage: "https://picsum.photos/id/93/500/300" },
+      { id: "acc94", category: "Accounting & Finance", milestone: "Plot 4011 Broadway Street, Ndola", address: "Plot 4011 Broadway Street, Ndola", name: "VISTA AUDIT FIRM", phone: "0212 614455", whatsapp: "260212614455", email: "info@vistaaudit.com", website: "https://www.vistaaudit.com", mapUrl: "https://maps.google.com/?q=VISTA+AUDIT+FIRM,+Plot+4011+Broadway+Street,+Ndola", featuredImage: "https://picsum.photos/id/94/500/300" },
+      { id: "acc95", category: "Accounting & Finance", milestone: "Plot 1201 Great East Road, Lusaka", address: "Plot 1201 Great East Road, Lusaka", name: "WESTERN FINANCIAL ADVISORS", phone: "0966 226699", whatsapp: "260966226699", email: "info@westernfinancial.com", website: "https://www.westernfinancial.com", mapUrl: "https://maps.google.com/?q=WESTERN+FINANCIAL+ADVISORS,+Plot+1201+Great+East+Road,+Lusaka", featuredImage: "https://picsum.photos/id/95/500/300" },
+      { id: "acc96", category: "Accounting & Finance", milestone: "Plot 2202 Lumumba Road, Lusaka", address: "Plot 2202 Lumumba Road, Lusaka", name: "WISDOM ACCOUNTING SERVICES", phone: "0977 558800", whatsapp: "260977558800", email: "info@wisdomacc.com", website: "https://www.wisdomacc.com", mapUrl: "https://maps.google.com/?q=WISDOM+ACCOUNTING+SERVICES,+Plot+2202+Lumumba+Road,+Lusaka", featuredImage: "https://picsum.photos/id/96/500/300" },
+      { id: "acc97", category: "Accounting & Finance", milestone: "Plot 880 Chachacha Road, Lusaka", address: "Plot 880 Chachacha Road, Lusaka", name: "ZENITH AUDITORS", phone: "0211 228800", whatsapp: "260211228800", email: "info@zenithaudit.com", website: "https://www.zenithaudit.com", mapUrl: "https://maps.google.com/?q=ZENITH+AUDITORS,+Plot+880+Chachacha+Road,+Lusaka", featuredImage: "https://picsum.photos/id/97/500/300" },
+      { id: "acc98", category: "Accounting & Finance", milestone: "Plot 3011 Rhodes Park, Lusaka", address: "Plot 3011 Rhodes Park, Lusaka", name: "ZERO DISTANCE CONSULTING", phone: "0966 448800", whatsapp: "260966448800", email: "info@zerodistance.com", website: "https://www.zerodistance.com", mapUrl: "https://maps.google.com/?q=ZERO+DISTANCE+CONSULTING,+Plot+3011+Rhodes+Park,+Lusaka", featuredImage: "https://picsum.photos/id/98/500/300" },
+      { id: "acc99", category: "Accounting & Finance", milestone: "Plot 1001 Katima Mulilo Road, Lusaka", address: "Plot 1001 Katima Mulilo Road, Lusaka", name: "ZETA FINANCIAL SERVICES", phone: "0977 669900", whatsapp: "260977669900", email: "info@zetafinancial.com", website: "https://www.zetafinancial.com", mapUrl: "https://maps.google.com/?q=ZETA+FINANCIAL+SERVICES,+Plot+1001+Katima+Mulilo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/99/500/300" },
+      { id: "acc100", category: "Accounting & Finance", milestone: "Plot 2205 Cairo Road, Lusaka", address: "Plot 2205 Cairo Road, Lusaka", name: "ZION CHARTERED ACCOUNTANTS", phone: "0211 234455", whatsapp: "260211234455", email: "info@zionacc.com", website: "https://www.zionacc.com", mapUrl: "https://maps.google.com/?q=ZION+CHARTERED+ACCOUNTANTS,+Plot+2205+Cairo+Road,+Lusaka", featuredImage: "https://picsum.photos/id/100/500/300" }
+    ];
+
+    // Combined business database
+    const businesses = ACCOUNTING_DATABASE.map(b => ({
+      ...b,
+      imageAltText: `${b.name} Banner`,
+      fundUrl: `#fund-${b.id}`,
+      infoUrl: `#info-${b.id}`
+    }));
+
+    let selectedCategory = "All";
+
+    // Card HTML Generator matching the grid specifications
+    function createCardTemplate(data) {
+      return `
+        <div class="biz-card" id="card-${data.id}">
+          <!-- Top Bar -->
+          <div class="card-topbar">
+            <div class="badge-card">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              Card
+            </div>
+            <div class="topbar-milestone">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>${data.milestone}</span>
+            </div>
+          </div>
+
+          <!-- Featured Media Image -->
+          <div class="card-media">
+            <img src="${data.featuredImage}" alt="${data.imageAltText}" loading="lazy" />
+          </div>
+
+          <!-- Business Name & Address -->
+          <div class="card-content">
+            <h3 class="card-name" title="${data.name}">${data.name}</h3>
+            <p class="card-address" title="${data.address}">${data.address}</p>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="card-actions">
+            <div class="action-row-main">
+              <a href="tel:${data.phone.replace(/\s+/g, '')}" class="btn-biz btn-call" title="Call">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                Call
+              </a>
+
+              <a href="${data.fundUrl}" class="btn-icon-green" title="Lend money to business">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="1" x2="12" y2="23"></line>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </a>
+
+              <a href="${data.infoUrl}" class="btn-icon-green" title="Financial Statements & Info">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="16" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+              </a>
+
+              <a href="${data.mapUrl}" target="_blank" class="btn-biz btn-map" title="Map">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                  <line x1="8" y1="2" x2="8" y2="18"></line>
+                  <line x1="16" y1="6" x2="16" y2="22"></line>
+                </svg>
+                Map
+              </a>
+            </div>
+
+            <div class="action-row-secondary">
+              <a href="https://wa.me/${data.whatsapp}" target="_blank" class="btn-biz btn-whatsapp" title="WhatsApp">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+                WhatsApp
+              </a>
+
+              <div class="card-links">
+                <a href="mailto:${data.email}" class="card-link" title="${data.email}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                  ${data.email}
+                </a>
+                <a href="${data.website}" target="_blank" class="card-link" title="${data.website}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                  </svg>
+                  ${data.website.replace('https://www.', '')}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Select random indices matching selected category
+    function getRandomIndices(count) {
+      const pool = selectedCategory === "All" 
+        ? businesses 
+        : businesses.filter(b => b.category === selectedCategory);
+      
+      const poolLength = pool.length;
+      if (poolLength === 0) return [];
+
+      const indices = new Set();
+      const targetCount = Math.min(count, poolLength);
+      while (indices.size < targetCount) {
+        indices.add(Math.floor(Math.random() * poolLength));
+      }
+      return Array.from(indices).map(idx => pool[idx]);
+    }
+
+    // Initial Render for Grid
+    function initializeGrid() {
+      const selectedBiz = getRandomIndices(8);
+      for (let slotIdx = 0; slotIdx < 8; slotIdx++) {
+        const slotEl = document.getElementById(`slot-${slotIdx}`);
+        if (slotEl) {
+          slotEl.innerHTML = selectedBiz[slotIdx] ? createCardTemplate(selectedBiz[slotIdx]) : '';
+        }
+      }
+    }
+
+    // Rotate Grid Cards
+    function rotateGridCards() {
+      const searchInput = document.getElementById('directorySearch');
+      if (searchInput && searchInput.value.trim() !== '') return; // Pause grid rotation during search
+      initializeGrid();
+    }
+
+    // Render Business Directory Panel
+    function renderDirectoryList() {
+      const listEl = document.getElementById('directoryContactsList');
+      if (!listEl) return;
+      
+      const filtered = selectedCategory === "All" 
+        ? businesses 
+        : businesses.filter(b => b.category === selectedCategory);
+
+      listEl.innerHTML = filtered.slice(0, 10).map(b => `
+        <div class="d-flex align-items-center justify-content-between p-2 border rounded bg-light">
+          <div class="text-truncate me-2">
+            <div class="fw-bold text-dark small text-truncate">${b.name}</div>
+            <div class="text-muted" style="font-size:0.7rem;">${b.address}</div>
+          </div>
+          <a href="tel:${b.phone.replace(/\s+/g, '')}" class="btn btn-sm btn-outline-success py-0 px-2 flex-shrink-0" style="font-size:0.75rem;">
+            <i class="bi bi-telephone-fill me-1"></i>Call
+          </a>
+        </div>
+      `).join('');
+    }
+
+    // SEARCH LOGIC RESTORATION
+    const searchInput = document.getElementById('directorySearch');
+    const clearBtn = document.getElementById('clearSearchBtn');
+    const searchOverlay = document.getElementById('searchResultsSection');
+    const searchResultsList = document.getElementById('searchResultsList');
+    const searchResultsCount = document.getElementById('searchResultsCount');
+    const mainSegments = document.getElementById('mainContentSegments');
+
+    function executeSearch() {
+      const query = searchInput.value.trim().toLowerCase();
+
+      if (query === '') {
+        clearBtn.style.display = 'none';
+        searchOverlay.style.display = 'none';
+        mainSegments.style.display = 'block';
+        return;
+      }
+
+      clearBtn.style.display = 'block';
+
+      // Filter matches
+      const results = businesses.filter(b => 
+        b.name.toLowerCase().includes(query) ||
+        b.category.toLowerCase().includes(query) ||
+        b.address.toLowerCase().includes(query) ||
+        b.milestone.toLowerCase().includes(query)
+      );
+
+      searchResultsCount.textContent = `Found ${results.length} result${results.length === 1 ? '' : 's'}`;
+
+      if (results.length > 0) {
+        searchResultsList.innerHTML = results.map(b => `
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div style="height:220px;">
+              ${createCardTemplate(b)}
+            </div>
+          </div>
+        `).join('');
+      } else {
+        searchResultsList.innerHTML = `
+          <div class="col-12 text-center py-4 text-muted">
+            <i class="bi bi-search display-6 text-black-50 mb-2 d-block"></i>
+            <p class="mb-0">No matching listings found for "<strong>${query}</strong>"</p>
+          </div>
+        `;
+      }
+
+      mainSegments.style.display = 'none';
+      searchOverlay.style.display = 'block';
+    }
+
+    searchInput.addEventListener('input', executeSearch);
+
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      executeSearch();
+      searchInput.focus();
+    });
+
+    // Category Filter Buttons Event
+    document.querySelectorAll('.filter-pill').forEach(pill => {
+      pill.addEventListener('click', (e) => {
+        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+        selectedCategory = e.currentTarget.getAttribute('data-category');
+        
+        initializeGrid();
+        renderDirectoryList();
+        
+        if (searchInput.value.trim() !== '') {
+          executeSearch();
+        }
+      });
+    });
+
+    // Category Filter Scroll Handlers
+    document.getElementById('scrollLeftBtn')?.addEventListener('click', () => {
+      document.getElementById('categoryFilterContainer').scrollBy({ left: -150, behavior: 'smooth' });
+    });
+
+    document.getElementById('scrollRightBtn')?.addEventListener('click', () => {
+      document.getElementById('categoryFilterContainer').scrollBy({ left: 150, behavior: 'smooth' });
+    });
+
+    // Initialize App
+    initializeGrid();
+    renderDirectoryList();
+    setInterval(rotateGridCards, 20000); // 20 Seconds Sync
+  </script>
+</body>
+</html>
